@@ -1,0 +1,169 @@
+.dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.dialog-content {
+  position: relative; /* Set to relative */
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 80%;
+  height: 80vh;
+  margin: auto;
+  text-align: left;
+  animation: slideIn 0.3s ease-out;
+}
+
+
+
+
+.dialog-delete-button {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: white;
+  border: 2px solid #801D1A;
+  font-size: 1rem;
+}
+
+.dialog-delete-button:hover {
+  background-color: #e3a3a9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-delete-button:active {
+  background-color: #801D1A;
+  color: white;
+}
+
+.dialog-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: white;
+  color: #252525;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 2px solid #801D1A;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.dialog-close-button:hover {
+  background-color: #e3a3a9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-close-button:active {
+  background-color: #801D1A;
+  color: white;
+}
+
+.horisontal-container {
+  display: flex;
+  flex-direction: row;
+  //align-items: center; 
+}
+
+.vertical-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.architecture-details-header {
+  font-size: 2.5rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.description-header {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.manipulation-button {
+  display: flex;
+  justify-content: left;
+  margin: 0;
+  padding: 5px;
+  background-color: transparent; 
+  border: 0;
+}
+
+.manipulation-button:hover {
+  cursor: pointer;
+}
+
+.manipulation-button:active {
+  color: #009BA0;
+}
+
+.input-field {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.input-field::placeholder {
+  color: #aaa;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #009BA0;
+}
+
+.input-field:focus::placeholder {
+  color: transparent;
+}
+
+.textarea-description:focus {
+  outline: none;
+  border-color: #009BA0;
+}
+
+.textarea-description::placeholder {
+  color: transparent;
+}
+
+.textarea-description {
+  width: 90%;
+  height: auto;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+
+.description {
+  width: 90%;
+  height: auto;
+  font-size: 1rem;
+  margin-right: 10px;
+  white-space: pre-line; /* Allows text to wrap */
+  word-break: break-word; 
+}
+

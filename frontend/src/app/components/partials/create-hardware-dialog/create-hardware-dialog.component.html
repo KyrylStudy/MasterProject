@@ -1,0 +1,36 @@
+<div class="dialog-container">
+    <div class="dialog-content">
+        <div>
+        <button class="dialog-close-button" (click)="close()">Close</button> <!-- Move close button here -->
+        
+            <h3> Create Hardware</h3>
+
+            <div class="property">
+                <h2>Type*: </h2>
+                <div class="dropdown-container" tabindex="0" (blur)="showDropdown = false">
+                    <div class="dropdown-display" (click)="toggleDropdownType()">
+                        {{ selectedOption?.label || 'Create' }}
+                    </div>
+                    <div class="dropdown-menu" *ngIf="showDropdown">
+                        <div class="dropdown-item" *ngFor="let option of options" (click)="selectOption(option)">
+                            {{ option.label }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="property">
+                <h2>Name*: </h2>
+                <input class="input-name" type="text" placeholder="ECU Name" [(ngModel)]="newHardwareName">
+            </div>
+            
+            <div class="property">
+                <h2>Description*: </h2>
+                <textarea class="textarea-description" type="text" placeholder="Description" [(ngModel)]="newHardwareDescription"></textarea>
+            </div>
+
+        </div>
+        <button class="dialog-save-button" [disabled]="!true" (click)="save()">Save</button> 
+    </div>
+</div>
+
+
