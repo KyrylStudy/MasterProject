@@ -234,17 +234,17 @@ private getElementPosition(element: any): { left: number, top: number } {
 zoomLevel: number = 1; // Initial zoom level
 
 zoomIn() {
-  if(this.zoomLevel === 1)
-  this.zoomLevel += 1; // Increase zoom level 
-  this.getDataStreams(this.selectedArchitecture.id);
+ // if(this.zoomLevel === 1)
+ // this.zoomLevel += 1; // Increase zoom level 
+ // this.getDataStreams(this.selectedArchitecture.id);
 
 }
 
 zoomOut() {
-  if(this.zoomLevel !== 1){
-    this.zoomLevel -= 1; // Decrease zoom level, ensuring it doesn't go below 0.1
-    this.getDataStreams(this.selectedArchitecture.id);
-  }
+ // if(this.zoomLevel !== 1){
+ //   this.zoomLevel -= 1; // Decrease zoom level, ensuring it doesn't go below 0.1
+ //   this.getDataStreams(this.selectedArchitecture.id);
+ // }
     
    
 

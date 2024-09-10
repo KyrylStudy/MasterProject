@@ -185,16 +185,14 @@ export class MainScreenComponent implements OnInit{
 
   zoomIn() {
    // if(this.zoomLevel < 1.1){
-      this.zoomLevel += 0.1; // Increase zoom level 
+    //  this.zoomLevel += 0.1; // Increase zoom level 
    //  }
-
-   console.log(this.dataStreams)
 
   }
 
   zoomOut() {
    // if (this.zoomLevel > 0.7) {
-      this.zoomLevel -= 0.1; // Decrease zoom level, ensuring it doesn't go below 0.1
+    //  this.zoomLevel -= 0.1; // Decrease zoom level, ensuring it doesn't go below 0.1
    // }
     
   }
