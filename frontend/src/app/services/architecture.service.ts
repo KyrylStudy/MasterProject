@@ -32,7 +32,7 @@ export class ArchitectureService {
   private architecturesSubject = new BehaviorSubject<Architecture[]>([]);
   architectures$ = this.architecturesSubject.asObservable();
 
-  baseArchitectureUrl = "http://backend:8080/api/architecture"
+  baseArchitectureUrl = "http://localhost:8080/api/architecture"
 
     loadAllArchitectures(): void{
       this.httpClient.get<Architecture[]>(`${this.baseArchitectureUrl}`).pipe(
