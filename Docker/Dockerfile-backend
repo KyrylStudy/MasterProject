@@ -1,0 +1,9 @@
+FROM maven as build
+ADD https://github.com/KyrylStudy/MasterProject.git /app
+WORKDIR /app/backend
+RUN mvn clean package -DskipTests
+FROM openjdk:24-slim as worker
+COPY --from=build /app/backend/target/*.jar /app/app.jar
+WORKDIR /app
+CMD [ "java", "-jar", "app.jar" ]
+# CMD [ "sleep", "3600" ]

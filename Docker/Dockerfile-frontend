@@ -1,0 +1,9 @@
+FROM node as build
+ADD https://github.com/KyrylStudy/MasterProject.git /app
+WORKDIR /app/frontend
+RUN npm ci && node_modules/.bin/ng build
+FROM node as worker
+COPY --from=build /app/frontend /app
+RUN npm install -g @angular/cli && rm -rf src
+WORKDIR /app
+CMD [ "ng", "serve", "--host", "0.0.0.0", "--port", "4200" ]
