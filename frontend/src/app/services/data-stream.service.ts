@@ -21,7 +21,7 @@ export class LineCreationService {
     this.creatingLineSubject.next(value);
   }
 
-  baseUrl = "http://backend:8080/api/bus/"
+  baseUrl = "http://localhost:8080/api/bus/"
   constructor(private httpClient: HttpClient) { }
 
 
@@ -67,7 +67,7 @@ export class LineCreationService {
 
 
 
-    baseDataStreamUrl = "http://backend:8080/api/data-stream/" 
+    baseDataStreamUrl = "http://localhost:8080/api/data-stream/" 
     getAllDataStreams(architectureId: number): Observable<DataStream[]>{
 
       return this.httpClient.get<DataStream[]>(`${this.baseDataStreamUrl + 'architecture/' + architectureId}`);

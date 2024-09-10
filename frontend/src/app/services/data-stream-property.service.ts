@@ -15,7 +15,7 @@ export class DataStreamPropertyService {
   private dataStreamProreriesSubject = new BehaviorSubject<DataStreamProperty[]>([]); 
   dataStreamProreries$ = this.dataStreamProreriesSubject.asObservable();
 
-  dataStreamPropertyUrl = "http://backend:8080/api/data-stream_property/"
+  dataStreamPropertyUrl = "http://localhost:8080/api/data-stream_property/"
 
   loadAllDataStreamProperties(dataStreamId: BigInt): void{
     this.httpClient.get<DataStreamProperty[]>(`${this.dataStreamPropertyUrl + 'get-all/' + dataStreamId }`).pipe(

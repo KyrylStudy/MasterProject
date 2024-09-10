@@ -15,7 +15,7 @@ export class HardwarePropertyService {
   private hardwareProreriesSubject = new BehaviorSubject<HardwareProperty[]>([]);
   hardwareProreries$ = this.hardwareProreriesSubject.asObservable();
 
-  hardwarePropertyUrl = "http://backend:8080/api/ecu/"
+  hardwarePropertyUrl = "http://localhost:8080/api/ecu/"
 
   loadAllHardwareProperties(hardwareId: BigInt): void{
     this.httpClient.get<HardwareProperty[]>(`${this.hardwarePropertyUrl + hardwareId + '/hardwares' }`).pipe(
