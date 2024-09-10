@@ -36,13 +36,16 @@ export class ArchitectureService {
 
     loadAllArchitectures(): void{
       this.httpClient.get<Architecture[]>(`${this.baseArchitectureUrl}`).pipe(
-        tap(architectures => this.architecturesSubject.next(architectures))
+        tap(architectures => {this.architecturesSubject.next(architectures)
+          console.log("all   ",architectures);
+        })
       ).subscribe();
     }
 
     loadArchitecture(id: BigInt): void {
       this.httpClient.get<Architecture>(`${this.baseArchitectureUrl + '/' + id}`).pipe(
-        tap(selectedArchitecture => this.selectedArchitectureSubject.next(selectedArchitecture))
+        tap(selectedArchitecture => {this.selectedArchitectureSubject.next(selectedArchitecture)
+        console.log(selectedArchitecture);})
       ).subscribe();
     }
 
