@@ -15,7 +15,7 @@ export class ServiceProperyService {
   private serviceProreriesSubject = new BehaviorSubject<ServiceProperty[]>([]);
   serviceProreries$ = this.serviceProreriesSubject.asObservable();
 
-  servicePropertyUrl = "http://backend:8080/api/"
+  servicePropertyUrl = "http://localhost:8080/api/"
 
   loadAllServiceProperties(serviceId: BigInt): void{
     this.httpClient.get<ServiceProperty[]>(`${this.servicePropertyUrl + "service_properties/" + serviceId }`).pipe(

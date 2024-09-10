@@ -41,7 +41,7 @@ export class HardwareService {
   private hardwaresSubject = new BehaviorSubject<Hardware[]>([]);
   hardwares$ = this.hardwaresSubject.asObservable();
 
-  baseHardwareUrl = "http://backend:8080/api/ecus/";
+  baseHardwareUrl = "http://localhost:8080/api/ecus/";
 
   loadAllHardwares(architectureId: number): Observable<Hardware[]>{
     const hardwares = this.httpClient.get<Hardware[]>(`${this.baseHardwareUrl  + 'architecture/' + architectureId }`);

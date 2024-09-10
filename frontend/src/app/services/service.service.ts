@@ -59,7 +59,7 @@ export class ServiceService /*implements OnInit, AfterViewInit*/{
 private servicesSubject = new BehaviorSubject<Service[]>([]);
 services$ = this.servicesSubject.asObservable();
 
-serviceUrl = "http://backend:8080/api/services/"
+serviceUrl = "http://localhost:8080/api/services/"
 
 getAllServicesByEcuId(ecu_id: BigInt):Observable<Service[]>{
   return this.httpClient.get<Service[]>(`${this.serviceUrl + 'ecu/' + ecu_id }`);
