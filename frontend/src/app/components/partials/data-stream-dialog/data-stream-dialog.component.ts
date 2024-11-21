@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LineCreationService } from '../../../services/data-stream.service';
 import { ArchitectureService } from '../../../services/architecture.service';
 import { DataStreamProperty, NewDataStreamProperty } from '../../../shared/models/data_stream_property';
-import { DataStreamPropertyService } from '../../../services/data-stream-property.service';
+import { DataStreamPropertyService } from '../../../services/data-stream-property.service'; 
 
 @Component({
   selector: 'app-data-stream-dialog',

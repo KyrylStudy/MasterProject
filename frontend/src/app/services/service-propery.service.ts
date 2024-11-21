@@ -17,10 +17,13 @@ export class ServiceProperyService {
 
   servicePropertyUrl = "http://localhost:8080/api/"
 
-  loadAllServiceProperties(serviceId: BigInt): void{
-    this.httpClient.get<ServiceProperty[]>(`${this.servicePropertyUrl + "service_properties/" + serviceId }`).pipe(
-      tap(serviceProreries => this.serviceProreriesSubject.next(serviceProreries))
+  loadAllServiceProperties(serviceId: BigInt): any{
+    const properties = this.httpClient.get<ServiceProperty[]>(`${this.servicePropertyUrl + "service_properties/" + serviceId }`);
+    properties.pipe(
+      tap(serviceProreries => this.serviceProreriesSubject.next(serviceProreries)) 
     ).subscribe();
+
+    return properties;
   }
 
   createServiceProperty(newServiceProperty: NewServiceProperty, serviceId: BigInt): void {

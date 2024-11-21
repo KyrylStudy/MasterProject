@@ -31,7 +31,7 @@ export class CreateHardwareDialogComponent {
 
   options = [
     { id: 1, label: 'ECU' },
-    { id: 2, label: 'BUS' }
+    { id: 2, label: 'Connector' }
   ];
 
 
@@ -43,7 +43,7 @@ export class CreateHardwareDialogComponent {
 
       this.showDropdown = !this.showDropdown;
       this.selectedOption = option;
-    }else if(option.label === 'BUS'){
+    }else if(option.label === 'Connector'){
 
       this.showDropdown = !this.showDropdown;
       this.selectedOption = option;
@@ -57,7 +57,7 @@ export class CreateHardwareDialogComponent {
       if (this.selectedOption && this.newHardwareName && this.newHardwareDescription) {
           const newEcu: NewHardware = {
             label: this.newHardwareName,
-            type: this.selectedOption.label,
+            type: this.selectedOption.label === 'ECU' ? this.selectedOption.label : 'BUS',
             description: this.newHardwareDescription,
             positionX: 228,
             positionY: 229,

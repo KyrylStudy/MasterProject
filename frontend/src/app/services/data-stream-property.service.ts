@@ -17,11 +17,19 @@ export class DataStreamPropertyService {
 
   dataStreamPropertyUrl = "http://localhost:8080/api/data-stream_property/"
 
-  loadAllDataStreamProperties(dataStreamId: BigInt): void{
-    this.httpClient.get<DataStreamProperty[]>(`${this.dataStreamPropertyUrl + 'get-all/' + dataStreamId }`).pipe(
+  loadAllDataStreamProperties(dataStreamId: BigInt): any{
+    const dataStreamPropery = this.httpClient.get<DataStreamProperty[]>(`${this.dataStreamPropertyUrl + 'get-all/' + dataStreamId }`);
+    dataStreamPropery.pipe(
       tap(dataStreamProreries => this.dataStreamProreriesSubject.next(dataStreamProreries)) 
     ).subscribe();
+
+    return dataStreamPropery;
   }
+
+   /* getAllDataStreams(architectureId: number): Observable<DataStream[]>{
+
+    return this.httpClient.get<DataStream[]>(`${this.baseDataStreamUrl + 'architecture/' + architectureId}`);
+  }*/
 
   createDataStreamProperty(newDataStreamProperty: NewDataStreamProperty, dataStreamId: BigInt): void {
     this.httpClient.post<NewDataStreamProperty>(`${this.dataStreamPropertyUrl + dataStreamId }`, newDataStreamProperty).pipe(

@@ -7,7 +7,7 @@ import { DataStream } from '../../../shared/models/data_stream';
 import { LineCreationService } from '../../../services/data-stream.service';
 import { Hardware } from '../../../shared/models/hardware';
 import { ServiceService } from '../../../services/service.service';
-import { ArchitectureService } from '../../../services/architecture.service';
+import { ArchitectureService } from '../../../services/architecture.service'; 
 
 @Component({
   selector: 'app-service',
@@ -609,14 +609,8 @@ ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
   }
 //---------------------------------------------01.06
 
-getLinesForServise(service: Service){
-  //1. get all lines
-  //2. filter under line.connectedFrom || line.connectedTo === service.id
-}
-
 updateCurrentState() {
-  //debugger
-  console.log(this.hardwares);
+
   for(let i = 0; i < this.hardwares.length; ++i){
     var servicesOfEcu = this.servicesMap.get(this.hardwares[i].id);
     console.log("services: ", servicesOfEcu);
