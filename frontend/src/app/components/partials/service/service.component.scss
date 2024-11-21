@@ -36,6 +36,8 @@ $receiver-color: red;
   position: absolute;
 }
 
+//.selected-ecu-wrapper{}
+
 .ecu {
   flex: 1; /* Allow .ecu elements to grow and take available space */
   max-width: 49%; /* Max width to ensure there's some space between them */

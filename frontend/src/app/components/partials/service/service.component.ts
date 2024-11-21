@@ -105,7 +105,7 @@ export class ServiceComponent {
 
     //const parentPosition = this.getElementPosition(ecuDragging.parentElement);
     var ParentEcuId:any;
-    debugger
+    //debugger
     this.servicesMap.forEach((value:any, key:any)=>{
       for(let i = 0; i < value.length; i++){
         if(value[i].id === service.id){
@@ -245,9 +245,6 @@ zoomOut() {
  //   this.zoomLevel -= 1; // Decrease zoom level, ensuring it doesn't go below 0.1
  //   this.getDataStreams(this.selectedArchitecture.id);
  // }
-    
-   
-
 }
 
 selectedService: any | null = null;
@@ -371,6 +368,17 @@ ngOnInit(): void {
   this.getDataStreams(this.selectedArchitecture.id)
   
   //this.setSenderRecieverStylesOnDataStreams()
+
+  this.servicesMap.forEach((items: any[], ecuId: any) => {
+    if (ecuId !== this.selectedEcu.id) { // Пропускаем выбранный ECU
+      items.forEach((item) => {
+        if (item.positionY > 300) {
+          item.positionY = 200;
+        }
+      });
+    }
+  });
+
 }
 
 @ViewChildren('line') lines!: QueryList<ElementRef>;

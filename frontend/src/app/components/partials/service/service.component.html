@@ -1,6 +1,3 @@
-<!--<ng-container *ngIf="!showServiceDialog">-->
-   <!-- <div class="dialog-container">
-        <div class="dialog-content">-->
 <button class="back-button" (click)="goBack()">&lt;</button>
 <button class="create-service-button" (click)="openCreateServiceDialog()">Create Service</button>  
 <button class="create-datastream-button" (click)="openCreateDatastreamDialog()">Create Datastream</button>
@@ -16,44 +13,43 @@
     </div>
 </div>
 <button class="select-all-services-button" (click)="selectAllServices()">Select all Services</button>
-<button class="service-save-button" (click)="updateCurrentState()">Save</button>
+<!--<button class="service-save-button" (click)="updateCurrentState()">Save</button>-->
 
-<div class="zoom-button-set">
+<!--<div class="zoom-button-set">
     <button class="zoom-button" (click)="zoomIn()">+</button>
     <button class="zoom-button" (click)="zoomOut()">-</button>
     
-</div>
+</div>-->
 
 <div class="main-screen">
 
 
     <div id="horisontal-wrapper" class="horisontal-wrapper">
-        
-        <div class="ecu">
-            
+             
+           <div class="ecu">
 
-            <h4 class="ecu-name">{{ selectedEcu.label + "|" + selectedEcu.id }}</h4>
-            <div id="drag-boundary-{{selectedEcu.id}}" class="drag-boundary" [style.zoom]="zoomLevel">
+                <h4 class="ecu-name">{{ selectedEcu.label + "|" + selectedEcu.id }}</h4>
+                <div id="drag-boundary-{{selectedEcu.id}}" class="drag-boundary" [style.zoom]="zoomLevel">
 
-                <div *ngFor="let item of servicesMap.get(selectedEcu.id)"
-                    cdkDrag
-                    cdkDragBoundary=".drag-boundary"
-                    [style.transform]="'translateX(' + item.positionX + 'px) translateY(' + item.positionY + 'px)'"
-                    (cdkDragEnded)="handleDragMoved($event, item)"
-                    (cdkDragMoved)="handleDragMoved($event, item)" 
-                    class="draggable-item"
-                    (dblclick)="openServiceDetailsDialog(item)"
-                    (click)="onEcuClick(item, $event)"
-                    [attr.serviceId]="item.id" 
-                    [id]="item.id"  >
-                    <div class="label-draggable-item">{{ item.name + "|" + item.id }}</div>
-                    <div class="content-draggable-item">S</div> <!--number of services-->
+                    <div *ngFor="let item of servicesMap.get(selectedEcu.id)"
+                        cdkDrag
+                        cdkDragBoundary=".drag-boundary"
+                        [style.transform]="'translateX(' + item.positionX + 'px) translateY(' + item.positionY + 'px)'"
+                        (cdkDragEnded)="handleDragMoved($event, item)"
+                        (cdkDragMoved)="handleDragMoved($event, item)" 
+                        class="draggable-item"
+                        (dblclick)="openServiceDetailsDialog(item)"
+                        (click)="onEcuClick(item, $event)"
+                        [attr.serviceId]="item.id" 
+                        [id]="item.id"  >
+                        <div class="label-draggable-item">{{ item.name + "|" + item.id }}</div>
+                        <div class="content-draggable-item">S</div> 
+                    </div>
                 </div>
             </div>
-        </div>
+        
         <div class="ecu" id="myElement" #scrollableEcu style="overflow: scroll;">
-            <div *ngFor="let item1 of hardwares"><!-- </ng-container>-->
-                <!--<div *ngIf="item1.id !== serviceData.selectedEcu.id"> </ng-container>-->
+            <div *ngFor="let item1 of hardwares">
                 
                     <div *ngIf="serviceData.dialogData.canReach(selectedEcu.id.toString(), item1.id.toString()) && item1.type =='ECU'">
                     <div class="ecu1">
@@ -72,7 +68,7 @@
                                 [id]="item.id"  
                                 #draggableItem>
                                 <div class="label-draggable-item">{{ item.name + "|" + item.id }}</div>
-                                <div class="content-draggable-item">S</div> <!--number of services-->
+                                <div class="content-draggable-item">S</div> 
                             </div>
                         </div>
                     </div>
@@ -80,20 +76,6 @@
             </div>  
         </div> 
         <svg id="svg-container" class="connestion-line-container" [style.zoom]="zoomLevel"> 
-
-           <!-- <defs>
-                <linearGradient id="reciever-sender" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style="stop-color:#ff0000; stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#0800ff; stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <defs>
-                <linearGradient id="sender-reciever" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style="stop-color:#0800ff; stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#ff0000; stop-opacity:1" />
-                </linearGradient>
-            </defs>-->
-
 
             <defs>
                 <marker
@@ -104,7 +86,6 @@
                   markerHeight="5" 
                   orient="auto-start-reverse">
                   
-                  <!-- Updated polygon to match the new dimensions -->
                   <polygon points="0 0, 12 2.5, 0 5" fill="black" />
                 </marker>
             </defs>
@@ -119,7 +100,6 @@
                   markerHeight="5" 
                   orient="auto-start-reverse">
                   
-                  <!-- Updated polygon to match the new dimensions -->
                   <polygon points="0 0, 12 2.5, 0 5" fill="black" />
                 </marker>
               </defs>
@@ -151,7 +131,4 @@
 <app-create-service-infrastructure-dialog *ngIf="showCreateServiceDialog" [createServiceDialogData]="dataFromServicesDashbord"></app-create-service-infrastructure-dialog>
 <app-data-stream-dialog *ngIf="showDataStreamDialog" [dataStreamsData]="dataFromServicesDashbord"></app-data-stream-dialog>  
 <app-service-dialog *ngIf="selectedService" [serviceDetilsData]="dataFromServicesDashbord" ></app-service-dialog> 
-<!--</div>
-</div>-->
-<!--</ng-container>-->
 

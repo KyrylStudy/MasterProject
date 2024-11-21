@@ -1,9 +1,25 @@
-FROM node as build
+FROM node:18-alpine as build
+
+# Клонируем репозиторий с проектом
 ADD https://github.com/KyrylStudy/MasterProject.git /app
+
+# Переходим в рабочую директорию
 WORKDIR /app/frontend
-RUN npm ci && node_modules/.bin/ng build
-FROM node as worker
+
+# Копируем только package.json и package-lock.json для кэширования зависимостей
+COPY package*.json ./
+
+# Устанавливаем зависимости проекта (только для фронтенда)
+RUN npm ci
+
+# Собираем проект с помощью локальной версии Angular CLI
+RUN npx ng build --configuration=production --project=frontend
+
+FROM node:18-alpine as worker
+
+# Копируем собранные файлы из первого образа
 COPY --from=build /app/frontend /app
-RUN npm install -g @angular/cli && rm -rf src
+
+# Запускаем приложение на сервере с помощью npx для вызова Angular CLI
 WORKDIR /app
-CMD [ "ng", "serve", "--host", "0.0.0.0", "--port", "4200" ]
+CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--port", "4200"]

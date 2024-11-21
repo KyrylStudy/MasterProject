@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HardwareProperty, NewHardwareProperty } from '../shared/models/hardware_property';
 
@@ -15,12 +15,24 @@ export class HardwarePropertyService {
   private hardwareProreriesSubject = new BehaviorSubject<HardwareProperty[]>([]);
   hardwareProreries$ = this.hardwareProreriesSubject.asObservable();
 
-  hardwarePropertyUrl = "http://localhost:8080/api/ecu/"
+  hardwarePropertyUrl = "http://localhost:8080/api/ecu/";
 
-  loadAllHardwareProperties(hardwareId: BigInt): void{
-    this.httpClient.get<HardwareProperty[]>(`${this.hardwarePropertyUrl + hardwareId + '/hardwares' }`).pipe(
+  /*loadAllHardwares(architectureId: number): Observable<Hardware[]>{
+    const hardwares = this.httpClient.get<Hardware[]>(`${this.baseHardwareUrl  + 'architecture/' + architectureId }`);
+    hardwares.pipe(
+      tap(hardwares => this.hardwaresSubject.next(hardwares))
+    ).subscribe(); 
+
+    return hardwares;
+  }*/
+
+  loadAllHardwareProperties(hardwareId: BigInt): Observable<HardwareProperty[]>{
+    const hardwareProreries = this.httpClient.get<HardwareProperty[]>(`${this.hardwarePropertyUrl + hardwareId + '/hardwares' }`);
+    hardwareProreries.pipe(
       tap(hardwareProreries => this.hardwareProreriesSubject.next(hardwareProreries))
     ).subscribe();
+
+    return hardwareProreries;
   }
 
   createHardwareProperty(newHardwareProperty: NewHardwareProperty, hardwareId: BigInt): void {

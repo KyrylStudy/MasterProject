@@ -15,7 +15,7 @@ import { Architecture } from '../../../shared/models/architectures';
 import { NewArchitecture } from '../../../shared/models/architectures';
 //import { Connection } from '../../../shared/models/service';
 import { Service } from '../../../shared/models/service';
-import { Observable, concatMap, forkJoin, tap } from 'rxjs';
+import { Observable, concatMap, firstValueFrom, forkJoin, tap } from 'rxjs';
 import { DataStream } from '../../../shared/models/data_stream';
 import { MainInternalServiceService } from '../../../services/main-internal-service.service';
 import { ArchitectureService } from '../../../services/architecture.service';
@@ -215,11 +215,18 @@ subscribeOnSelectedHardware(){
   );
 }
 
+
+propertiesOfAllHardwares:HardwareProperty[] = [];
+
 subscribeOnHardwares(){
   this.hardwareService.hardwares$.subscribe(
       {
         next: data => {
           this.ecus = data;
+         /* for(let i = 0; i < this.ecus.length; i++){
+            this.propertiesOfAllHardwares[i] = this.hardwarePropertyService.loadAllHardwareProperties(hardwareItem.id)
+          }*/
+          
         },
         error: error => {
           console.error(error);
@@ -339,7 +346,6 @@ subscribeOnDataStreams(){
     this.subscribeOnSelectedArchitecture();
     //this.architectureService.loadArchitecture(BigInt(1));
     
-
     this.subscribeOnHardwareProperties();
 
     this.subscribeOnServicesCount();
@@ -347,7 +353,9 @@ subscribeOnDataStreams(){
 
     //-------------------------------------------------
     //this.getAllBus(1);
+
   }
+
 //----------------------------------------------------------------------------------------------
   private getAllBus(architectureId: number){
     this.lineCreationService.getAllBus(architectureId).subscribe(data => {
@@ -696,9 +704,102 @@ creatingNewLine = false;
 
 //---------------------------------------------------HEADER---END------------------
 
+/*generateToken() {
+  // Construct the token object with each hardware item containing its associated services and properties
+  const token = {
+    hardware: this.ecus.map(hardwareItem => ({
+      ...hardwareItem,
+      services: this.servicesMap.get(hardwareItem.id) || [], // Retrieve services by hardware ID
+      properties: this.hardwarePropertyService.loadAllHardwareProperties(hardwareItem.id),//---------------------PROBLEM
+    })),
+    dataStreams: this.dataStreams,
+  };
+
+  // Convert to JSON format
+  const jsonToken = JSON.stringify(token);
+  console.log("Generated Token:", jsonToken);
+
+  // Further logic to handle the token, like displaying it or sending it to a server
+
+  return jsonToken;
+}*/
+
+/*async generateToken() {
+  // Map each hardware item to a Promise that loads its properties
+  const hardwareWithProperties = await Promise.all(
+    this.ecus.map(async (hardwareItem) => {
+      const properties = await firstValueFrom(this.hardwarePropertyService.loadAllHardwareProperties(hardwareItem.id));
+      return {
+        ...hardwareItem,
+        properties: properties || [], // Use the loaded properties or an empty array if none are found
+        services: this.servicesMap.get(hardwareItem.id) || [], // Retrieve services by hardware ID
+      };
+    })
+  );
+
+  // Construct the token object with each hardware item containing its associated services and properties
+  const token = {
+    hardware: hardwareWithProperties,
+    dataStreams: this.dataStreams,
+  };
+
+  // Convert to JSON format
+  const jsonToken = JSON.stringify(token);
+  console.log("Generated Token:", jsonToken);
+
+  // Further logic to handle the token, like displaying it or sending it to a server
+
+  return jsonToken;
+}*/
+
+async generateToken() {
+  // Map each hardware item to a Promise that loads its properties
+  const hardwareWithProperties = await Promise.all(
+    this.ecus.map(async (hardwareItem) => {
+      const properties = await firstValueFrom(this.hardwarePropertyService.loadAllHardwareProperties(hardwareItem.id));
+      const services = (this.servicesMap.get(hardwareItem.id) || []).map((service) => {
+        // Filter dataStreams that belong to the service
+        const serviceDataStreams = this.dataStreams.filter(
+          (dataStream) =>
+            dataStream.connectedFrom === service.id.toString() || dataStream.connectedTo === service.id.toString()
+        );
+        return {
+          ...service,
+          dataStreams: serviceDataStreams, // Assign filtered dataStreams to the service
+        };
+      });
+      return {
+        ...hardwareItem,
+        properties: properties || [], // Use the loaded properties or an empty array if none are found
+        services, // Attach services with their corresponding dataStreams
+      };
+    })
+  );
+
+  // Construct the token object with each hardware item containing its associated services and properties
+  const token = {
+    architecture: {
+      name: this.selectedArchitecture?.name,
+      description: this.selectedArchitecture?.description,
+      hardware: hardwareWithProperties,
+    }
+  };
+
+  // Convert to JSON format
+  const jsonToken = JSON.stringify(token);
+  console.log("Generated Token:", jsonToken);
+
+  // Further logic to handle the token, like displaying it or sending it to a server
+
+  return jsonToken;
+}
+
+
 
 
 }
+
+
 
 
 

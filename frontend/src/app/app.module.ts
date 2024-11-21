@@ -5,9 +5,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './components/partials/footer/footer.component';
+//import { FooterComponent } from './components/partials/footer/footer.component';
 import { MainScreenComponent } from './components/partials/main-screen/main-screen.component';
-import { HomeComponent } from './components/pages/home/home.component';
+//import { HomeComponent } from './components/pages/home/home.component';
 //-------------
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
@@ -25,9 +25,9 @@ import { CreateArchitectureComponent } from './components/partials/create-archit
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
+    //FooterComponent,
     MainScreenComponent,
-    HomeComponent,
+    //HomeComponent,
     DialogComponent,
     BusDialogComponent,
     ServiceComponent,

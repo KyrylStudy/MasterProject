@@ -53,10 +53,10 @@
     transition: border-color 0.3s ease;
   }
   
-  .input-name::placeholder,
+ /* .input-name::placeholder,
   .textarea-description::placeholder { 
     color: #aaa;
-  }
+  }*/
   
   .input-name:focus,
   .textarea-description:focus {
@@ -78,6 +78,7 @@
     border-radius: 6px;
     font-size: 16px;
     transition: border-color 0.3s ease;
+    resize: none;
   }
   
   .dialog-close-button {
