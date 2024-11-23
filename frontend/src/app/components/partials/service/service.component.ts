@@ -1,7 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, Output,QueryList,Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, QueryList,Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { Service } from '../../../shared/models/service';
 import { NewDataStream } from '../../../shared/models/data_stream';
-//import { EcuService } from '../../../services/ecu.service';
 import { HardwareService } from '../../../services/hardware.service';
 import { DataStream } from '../../../shared/models/data_stream';
 import { LineCreationService } from '../../../services/data-stream.service';
@@ -21,39 +20,12 @@ export class ServiceComponent {
   showDataStreamDialog: boolean = false;
 
   dataForServiceDialog = this;
-  //showServiceDialog:boolean = false; 
 
   setSenderRecieverStylesOnDataStreams(){
-    
-    console.log(228)
-
     this.dataStreams.forEach((item, index)=>{
       const element = this.el.nativeElement.querySelector(`[dataStreamId="${item.id}"]`);
-      //const element = document.querySelector(`[dataStreamId="${item.id}"]`);
       if(element)
       element.style.cssText += 'marker-start: url(#arrowhead)';
-      /*if(element){
-        const computedStyles = window.getComputedStyle(element);
-        for (let i = 0; i < computedStyles.length; i++) {
-          if(computedStyles[i] === 'stroke'){
-           
-          }
-          console.log(`${computedStyles[i]}: ${computedStyles.getPropertyValue(computedStyles[i])}`);
-      }
-      }*/
-      //console.log(element.style.stroke)
-      //const nativeElement = this.lineElement.nativeElement;
-      //this.renderer.setStyle(element, 'stroke', 'url(#reciever-sender)');
-
-      //this.renderer.setAttribute(element, 'stroke', '!url(#reciever-sender)');
-
-      //element.style.setProperty('stroke', 'url(#reciever-sender)', 'important');
-
-
-      //element.style.stroke = "url(#reciever-sender)"
-      //console.log(element.style.stroke)
-      
-      console.log(element)
     })
   }
 
@@ -73,49 +45,19 @@ export class ServiceComponent {
   constructor(private architectureService:ArchitectureService, private serviceService:ServiceService, private renderer: Renderer2, private el: ElementRef,
      private hardwareService: HardwareService, private lineCreationService: LineCreationService) { 
   }
-
-
-  /*onDragEnded(event: any, ecu: Service): void {
-    const element = event.source.getRootElement();
-    const boundingClientRect = element.getBoundingClientRect();
-    const parentPosition = this.getElementPosition(element.parentElement);
-
-    ecu.positionX = boundingClientRect.x - parentPosition.left; 
-    ecu.positionY = boundingClientRect.y - parentPosition.top;
-  
-  
-    this.rewriteLine(ecu);
-    this.lineCreationService.setDataStreams(this.dataStreams); 
- 
-  }
-
-
-  private getElementPosition(element: any): { left: number, top: number } {
-    const rect = element.getBoundingClientRect();
-    const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    const scrollLeft = window.scrollX || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
-
-    return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
-  }*/
  
 
   rewriteLine(service: Service) {
-    const ecuDragging = this.el.nativeElement.querySelector(`[serviceId="${service.id}"]`);
-    var ecuRect = ecuDragging.getBoundingClientRect();
-
-    //const parentPosition = this.getElementPosition(ecuDragging.parentElement);
     var ParentEcuId:any;
-    //debugger
     this.servicesMap.forEach((value:any, key:any)=>{
       for(let i = 0; i < value.length; i++){
         if(value[i].id === service.id){
           ParentEcuId = key;
-          console.log(ParentEcuId)
         }
         
       }
     })
-    //debugger
+
     const parentEcu:any = document.getElementById(`drag-boundary-${ParentEcuId}`);
     const parentPosition = parentEcu.getBoundingClientRect();
 
@@ -128,13 +70,9 @@ export class ServiceComponent {
     var workAreaPositionX =  workAreaPosition.left;
     var workAreaPositionY =  workAreaPosition.top;
 
-
-   // console.log("positionX ", positionX, " | ", ParentEcuId)
-   // console.log("positionY ", positionY, " | ", ParentEcuId)
 if(this.zoomLevel === 1){
   for (let i = 0; i < this.dataStreams.length; i++) {
     if (this.dataStreams[i].connectedFrom === service.id.toString()) {
-      console.log(this.dataStreams[i])
         this.dataStreams[i].positionFromX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX - 2).toString();
         this.dataStreams[i].positionFromY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY - 5).toString();
     } else if (this.dataStreams[i].connectedTo === service.id.toString()) {
@@ -171,38 +109,6 @@ setElementPosition(event: any, ecu: Hardware): void {
 
   ecu.positionX = (boundingClientRect.x - parentPosition.left);
   ecu.positionY = (boundingClientRect.y - parentPosition.top) ;
-
-
-  //ecu.positionX = (event.pointerPosition.x );
- // ecu.positionY = (event.pointerPosition.y) ;
- /*var ParentEcuId:any;
- this.servicesMap.forEach((value:any, key:any)=>{
-   for(let i = 0; i < value.length; i++){
-     if(value[i].id === ecu.id){
-       ParentEcuId = key;
-     }
-     
-   }
- })
- const parentEcu:any = document.getElementById(`drag-boundary-${ParentEcuId}`);
- const parentPosition = parentEcu.getBoundingClientRect();
-
- var positionX =  parentPosition.left;
- var positionY =  parentPosition.top;
-  
-
- const elementRect = event.source.element.nativeElement.getBoundingClientRect();
-
- let newX = (event.pointerPosition.x - positionX) / this.zoomLevel;
- let newY = (event.pointerPosition.y - positionY) / this.zoomLevel;
- console.log(newX)
- // Ensure the element stays within the boundaries
- newX = Math.max(0, Math.min(newX, parentEcu.width - elementRect.width / this.zoomLevel));
- newY = Math.max(0, Math.min(newY, parentEcu.height - elementRect.height / this.zoomLevel));
-
- ecu.positionX = newX;
- ecu.positionY = newY;*/
-
 }
 
 
@@ -213,21 +119,6 @@ private getElementPosition(element: any): { left: number, top: number } {
 
   return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
 }
-
-/*rewriteLine1(ecu: Service) {
-
-
-      for (let i = 0; i < this.dataStreams.length; i++) {
-          if (this.dataStreams[i].connectedFrom == ecu.id.toString()) {
-              this.dataStreams[i].positionFromX = (ecu.positionX + (this.ServiceWidth / 2)).toString();
-              this.dataStreams[i].positionFromY = (ecu.positionY + (this.ServiceHeight / 2)).toString();
-          } else if (this.dataStreams[i].connectedTo == ecu.id.toString()) {
-              this.dataStreams[i].positionToX = (ecu.positionX + (this.ServiceWidth / 2)).toString();
-              this.dataStreams[i].positionToY = (ecu.positionY + (this.ServiceHeight / 2)).toString();
-          }
-      }
-  }*/
-//}
 
 
 //---------------zoom-----------
@@ -303,11 +194,7 @@ subscribeOnHardwares(){
   );
 }
 
-/*checHardwaresOnConnection(firstHardwareId:string, secondHardwareId:string,){
-  this.serviceData.dialogData.canReach(firstHardwareId, secondHardwareId);
-}*/
-
-servicesMap: any = new Map();
+servicesMap: any = new Map(); 
 subscribeOnServices(){
   this.serviceService.allServicesInArchitectureMap$.subscribe(
       {
@@ -321,7 +208,6 @@ subscribeOnServices(){
   );
 }
 
-//servicesOfSelectedEcu: Service[] = [];
 subscribeOnServicesOfSelectedEcu(){
   this.serviceService.services$.subscribe(
       {
@@ -350,7 +236,6 @@ subscribeOnDataStreams(){
 }
 
 ngOnInit(): void {
-
   this.subscribeOnDataStreams();
 
   this.subscribeOnSelectedService();
@@ -366,11 +251,9 @@ ngOnInit(): void {
 
   this.scrollableEcu.nativeElement.addEventListener('scroll', this.onElementScroll.bind(this));
   this.getDataStreams(this.selectedArchitecture.id)
-  
-  //this.setSenderRecieverStylesOnDataStreams()
 
   this.servicesMap.forEach((items: any[], ecuId: any) => {
-    if (ecuId !== this.selectedEcu.id) { // Пропускаем выбранный ECU
+    if (ecuId !== this.selectedEcu.id) {
       items.forEach((item) => {
         if (item.positionY > 300) {
           item.positionY = 200;
@@ -385,47 +268,8 @@ ngOnInit(): void {
 
 
 ngAfterViewInit() {
-  console.log("228:           ", this.lines)
   this.setSenderRecieverStylesOnDataStreams();
-  /*this.lines.forEach((lineElement, index) => {
-    const line = lineElement.nativeElement;
-    //const gradient = this.getGradientForLine(line.getAttribute('connectedFrom'), line.getAttribute('connectedTo'));
-    this.renderer.setAttribute(line, 'stroke', 'url(#reciever-sender)');
-
-    //const element = this.el.nativeElement.querySelector(`[dataStreamId="${item.id}"]`);
-    //  console.log(element.style.stroke)
-      //const nativeElement = this.lineElement.nativeElement;
-      //this.renderer.setStyle(line, 'stroke', 'url(#reciever-sender)');
-
-
-      //element.style.stroke = "url(#reciever-sender)"
-      console.log(line.style.stroke)
-      console.log(line)
-  });*/
 }
-
-private getGradientForLine(connectedFrom: string, connectedTo: string): string {
-  // Determine which gradient to use based on connectedFrom and connectedTo
-  // For simplicity, assume sender-receiver if condition matches
-  if (connectedFrom === 'sender' && connectedTo === 'receiver') {
-    return 'url(#sender-reciever)';
-  } else if (connectedFrom === 'receiver' && connectedTo === 'sender') {
-    return 'url(#reciever-sender)';
-  }
-  return 'none'; // Default style if no gradient
-}
-
-
-/*ngAfterViewInit() {
-  this.setSenderRecieverStylesOnDataStreams();
-}*/
-
-/*scrollableEcu:any;
-ngAfterViewInit(){
-  //@ViewChild('scrollableEcu', { static: true }) scrollableEcu!: ElementRef;
-  this.scrollableEcu = @ViewChild('scrollableEcu', { static: true }): ElementRef;
-
-}*/
 
 
 private getDataStreams(architectureId: number){
@@ -433,7 +277,6 @@ private getDataStreams(architectureId: number){
   this.lineCreationService.getAllDataStreams(architectureId).subscribe({
       next: (data) => { 
 
-        //debugger 
         if(this.selectedOption){
           this.getDataStreamsOfSelectdService(data); 
         }else{
@@ -441,7 +284,6 @@ private getDataStreams(architectureId: number){
           this.rewriteAllDataStreams();
         }
         this.lineCreationService.setDataStreams(this.dataStreams);
-       // this.setSenderRecieverStylesOnDataStreams();
       },
       error: (error) => {
         // Handle the error here if needed
@@ -449,15 +291,7 @@ private getDataStreams(architectureId: number){
       }
     }
     
-    
-    /*data => {
-    if(this.serviceData.selectedService){
-      this.getDataStreamsOfSelectdService(data)
-    }else{
-      this.getAllDataStreams(data)
-    }
-
-  }*/);
+  );
 }
 
 
@@ -465,7 +299,6 @@ private getDataStreams(architectureId: number){
 ServiceWidth = 40 + 4;//content + border 
 ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
 
-//dataStreams: DataStream[] = [];
 
   startTargetEcuElementNewBus: any;
   endTargetEcuElementNewBus: any;
@@ -473,9 +306,11 @@ ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
   endEcu: Service | null = null;
   startLinePsition: any;
 
+  dataStreamName: any = null;
+  dataStreamDescription: any = null;
+
   onEcuClick(ecu: Service, event: MouseEvent){ 
-    //this.dataStreamsTransport.emit(this); 
-    //console.log(this.creatingDatastreamModus)
+
     
     if(this.creatingDatastreamModus){
       if (!this.startEcu) {
@@ -483,23 +318,18 @@ ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
         this.startTargetEcuElementNewBus = event.target as HTMLElement;
         this.renderer.addClass(this.startTargetEcuElementNewBus, 'selected');
   
-        //ecu.connectedTo = "777";
         this.startEcu = ecu;
 
         const ecuDragging: any = event.target as HTMLElement;
 
         var ecuRect = ecuDragging.getBoundingClientRect();
         this.startLinePsition = ecuRect;
-
-        console.log('Selected start ECU:', this.startEcu);
       } else if (!this.endEcu) {
         // Second click, select end ECU and create line
         this.endTargetEcuElementNewBus = event.target as HTMLElement;
         this.renderer.addClass(this.endTargetEcuElementNewBus, 'selected');
-  
-       // ecu.connectedTo = "777";
+
         this.endEcu = ecu;
-        console.log('Selected end ECU:', this.endEcu);
         if (this.startEcu !== this.endEcu) {
           // Ensure start and end ECUs are different
           const ecuDragging: any = event.target as HTMLElement;
@@ -507,31 +337,25 @@ ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
           var ecuRect = ecuDragging.getBoundingClientRect();
 
           const newDataStream: NewDataStream = {
-          name: 'Data Stream ' + (this.dataStreams.length + 1),
+          name: this.dataStreamName,
           type: 'Data Stream',
-          description: 'default description',
-          positionFromX: (this.startLinePsition.left /*+ (this.serviceData.ECUwidth/2)*/).toString(),
+          description: this.dataStreamDescription,
+          positionFromX: (this.startLinePsition.left).toString(),
           positionFromY: (this.startLinePsition.top - ((this.ServiceHeight/2) / this.zoomLevel)).toString(),
-          positionToX: (ecuRect.left /*+ (this.serviceData.ECUwidth/2)*/).toString(),
+          positionToX: (ecuRect.left).toString(),
           positionToY: (ecuRect.top - ((this.ServiceHeight/2) / this.zoomLevel)).toString(),
           connectedFrom: this.startEcu.id.toString(),
           connectedTo: this.endEcu.id.toString(), twoWayConnection: false};
 
-          //this.serviceData.dataStreams[this.serviceData.dataStreams.length] = newDataStream
 
           this.lineCreationService.createDataStream(this.selectedArchitecture.id, newDataStream).subscribe(data =>{
-            //this.dataStreams[this.dataStreams.length] = data
+
             this.getDataStreams(this.selectedArchitecture.id)
-            //console.log(this.lines)
-            //this.setValueToShare(this);
+   
           });
 
-
-  
-          console.log('New line created:', newDataStream);
         } else {
-          //ecu.connectedTo = ""; 
-          console.log('Start and end ECUs cannot be the same');
+          alert('Start and end Service cannot be the same');
         }
         // Reset start and end ECUs
         
@@ -544,17 +368,15 @@ ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
         }, 1000)
   
       }
-      console.log('Creating a line between ECUs');
     } else {
       // Default ECU click handling logic
-      console.log("default ecu click")
     }
     }
 
 //-----------------------------onScroll
 
-    @ViewChild('scrollableEcu', { static: true }) scrollableEcu!: ElementRef;
-   //scrollableEcu: any = document.getElementById('myElement');
+  @ViewChild('scrollableEcu', { static: true }) scrollableEcu!: ElementRef;
+
 
 
 
@@ -611,12 +433,12 @@ ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
 
 updateCurrentState() {
 
-  for(let i = 0; i < this.hardwares.length; ++i){
-    var servicesOfEcu = this.servicesMap.get(this.hardwares[i].id);
-    console.log("services: ", servicesOfEcu);
+  for(let i = 0; i < this.hardwares.length; i++){
+   // debugger
+    var servicesOfEcu = this.serviceService.servicesMap.get(this.hardwares[i].id);
+    if(servicesOfEcu)
     for(let j = 0; j < servicesOfEcu.length; j++){
         this.serviceService.updadeService(servicesOfEcu[j], servicesOfEcu[j].id, )
-        //this.updateService(servicesOfEcu[j], servicesOfEcu[j].id);
     }
   }
 
@@ -624,11 +446,6 @@ updateCurrentState() {
     this.updateDataStream(this.dataStreams[i], this.dataStreams[i].id)
   }
 }
-
-/*private updateService(Service: Service, id: BigInt){
-
-  this.ecuService.updadeService(Service, id).subscribe();
-}*/
 
 private updateDataStream(DataStream: DataStream, id: BigInt){
 
@@ -647,10 +464,9 @@ toggleDropdownServiceForShowDataStreams(): void {
 
 
 options:any = [];
-//selectedService: any = null;
 selectedOption: any = null;
 selectServiceForShowDataStreams(option: any): void {
-  //debugger
+
   if(option){
     this.selectedOption = option;
     this.dataStreams = [];
@@ -658,23 +474,6 @@ selectServiceForShowDataStreams(option: any): void {
   }else{
     this.selectedOption = null;
   }
-
-
- // this.getDataStreamsOfSelectdService(this.dataStreams)
-  /*if (option.label === 'new Hardware') {
-
-   this.showCreateHardwareDialog = option.label;
-
- } else if (option.label === 'new Connection') {
-   this.showCreateHardwareDialog = option.label;
-   this.creatingBusModus = true;
- } else if (option.label === 'new Architecture'){
-   this.showCreateHardwareDialog = option.label;
-   this.selectedOption = option;   
- } else {
-   this.selectedOption = option;
- }*/
-  console.log("segergergerg:    ",this.selectedOption)
  this.showDropdown = false; 
 
 }
@@ -682,7 +481,7 @@ selectServiceForShowDataStreams(option: any): void {
 getDataStreamsOfSelectdService(allDataStreams: any){
     var selectedServiceDataStreams:any = [];
     var connectedServices: any = [];
-   // console.log(this.selectedService)
+
     for(let i = 0; i < allDataStreams.length; i++){
       if(allDataStreams[i].connectedFrom == this.selectedOption.id){
         selectedServiceDataStreams.push(allDataStreams[i]);
@@ -694,7 +493,6 @@ getDataStreamsOfSelectdService(allDataStreams: any){
         connectedServices.push(service)
       }
     }
-    console.log("0000000000:  ", selectedServiceDataStreams);
     this.dataStreams = selectedServiceDataStreams;
     for(let i = 0; i < connectedServices.length; i++){
       this.rewriteLine(connectedServices[i])
@@ -704,11 +502,14 @@ getDataStreamsOfSelectdService(allDataStreams: any){
 
 
   rewriteAllDataStreams(){ 
-    this.servicesMap.forEach((serviscesOfEcu: any, ecu: any)=>{
+    let that = this;
+    that.servicesMap.forEach((serviscesOfEcu: any, ecu: any)=>{
       for(let i = 0; i < serviscesOfEcu.length; i++){
-        this.rewriteLine(serviscesOfEcu[i])
+        that.rewriteLine(serviscesOfEcu[i])
       }
-    })
+    });
+
+ 
   }
 
   selectAllServices(){ 
@@ -720,27 +521,12 @@ getDataStreamsOfSelectdService(allDataStreams: any){
 
   selectedDataStream: any; 
 
-  openDataStreamDetails(dataStream: DataStream){//------------------------------add logic!!!
+  openDataStreamDetails(dataStream: DataStream){
     this.updateCurrentState();
     this.selectedDataStream = dataStream;
     this.showDataStreamDialog = true;
-    //this.serviceData.showService = false;
-    //this.dataStreamsTransport.emit(this); 
   }
 
-  //@Output() dataStreamsTransport = new EventEmitter<any>();
-
-
-  /*close(): void {
-    this.closeDialog.emit(true);
-    console.log(this.serviceData.dialogData.dialogData)
-    this.serviceData.selectedService = null;
-  }*/
-
-    /*onCloseCreateDialog(){
-      this.showCreateServiceDialog = false;
-    }*/
-  
     showCreateServiceDialog: boolean = false;
     openCreateServiceDialog(){
       this.updateCurrentState();
@@ -748,9 +534,11 @@ getDataStreamsOfSelectdService(allDataStreams: any){
     }
 
     creatingDatastreamModus: Boolean = false;
+    showCreateDataStreamDialog: Boolean = false;
     openCreateDatastreamDialog(){
       this.updateCurrentState();
       this.creatingDatastreamModus = true;
+      this.showCreateDataStreamDialog = true;
     }
   
 }

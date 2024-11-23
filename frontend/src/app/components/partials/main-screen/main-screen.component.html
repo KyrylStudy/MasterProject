@@ -84,21 +84,15 @@
             [attr.ecuId]="item.id" >
                     <ng-container *ngIf="item.type == 'ECU'">
                         <div class="ecu">
-                            <div class="label-draggable-item">{{ item.label + "|" + item.id}}</div>
+                            <div class="label-draggable-item">{{ item.label}}</div>  <!--{{ item.label + "|" + item.id}}-->
                             <div class="content-draggable-item">{{ servicesCountMap.get(item.id) || 0 }} Services</div> <!--number of services-->
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="item.type == 'BUS'"> 
-                        <div class="label-bus">{{ item.label + "|" + item.id}}</div>
+                    <ng-container *ngIf="item.type == 'Connector'"> 
+                        <div class="label-bus">{{ item.label }}</div>  <!--{{ item.label + "|" + item.id}}-->
                         <div class="bus">
                         </div>
                     </ng-container>
-                    <!--<ng-container *ngIf="item.type == 'CAN'">
-                        <div class="can">
-                            <div class="label-can">{{ item.label + "|" + item.id}}</div>
-                            <div class="content-can"></div>
-                        </div>
-                    </ng-container>-->
 
                 
             </div>
@@ -123,7 +117,7 @@
             [attr.connectedTo]="connection.connectedTo"
             [attr.id]="'connection_overlay_' + connection.id"
             (dblclick)="openHardwareConnectionDetailsDialog(connection)"/>     
-    </svg>
+    </svg> 
 
 
         <app-create-architecture *ngIf="showCreateArchitectureDialog" [createArchitectureData]="dialogData"></app-create-architecture>

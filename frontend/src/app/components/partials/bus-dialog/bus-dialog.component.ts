@@ -18,21 +18,21 @@ export class BusDialogComponent {
     //console.log(this.dialogData)
   }
 
-  delete(): void {
+  delete(): void { 
     var connectedFromEcuId = this.dialogData.selectedConnection.connectedFrom;
-    var connectedFromEcu: Hardware | null = null;
+   // var connectedFromEcu: Hardware | null = null;
     var connectedToEcuId = this.dialogData.selectedConnection.connectedTo;
-    var connectedToEcu: Hardware | null = null;
+   // var connectedToEcu: Hardware | null = null;
     for(let i = 0; i < this.dialogData.ecus.length; i++){
       if(this.dialogData.ecus[i].id == connectedFromEcuId){
         //connectedFromEcu = this.dialogData.ecus[i];
         this.dialogData.ecus[i].connectedTo = ''
-        console.log(this.dialogData.ecus[i])
+      //  console.log(this.dialogData.ecus[i])
       }
       if(this.dialogData.ecus[i].id == connectedToEcuId){
         //connectedToEcu = this.dialogData.ecus[i];
         this.dialogData.ecus[i].connectedTo = ''
-        console.log(this.dialogData.ecus[i])
+       // console.log(this.dialogData.ecus[i])
       }
     }
 

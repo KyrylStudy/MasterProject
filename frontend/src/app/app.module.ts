@@ -20,6 +20,7 @@ import { ServiceDialogComponent } from './components/partials/service-dialog/ser
 import { DataStreamDialogComponent } from './components/partials/data-stream-dialog/data-stream-dialog.component';
 import { ArchitectureDetailsDialogComponent } from './components/partials/architecture-details-dialog/architecture-details-dialog.component';
 import { CreateArchitectureComponent } from './components/partials/create-architecture/create-architecture.component';
+import { CreateDataStreamDialogComponent } from './components/partials/create-data-stream-dialog/create-data-stream-dialog.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { CreateArchitectureComponent } from './components/partials/create-archit
     DataStreamDialogComponent,
     ArchitectureDetailsDialogComponent,
     CreateArchitectureComponent,
+    CreateDataStreamDialogComponent,
   ],
   imports: [
     BrowserModule,

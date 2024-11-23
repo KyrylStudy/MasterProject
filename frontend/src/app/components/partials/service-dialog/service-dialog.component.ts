@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-//import { EcuService } from '../../../services/ecu.service';
+import { Component, Input } from '@angular/core';
 import { HardwareService } from '../../../services/hardware.service';
 import { LineCreationService } from '../../../services/data-stream.service';
 import { ServiceService } from '../../../services/service.service';
@@ -8,7 +7,6 @@ import { DataStream } from '../../../shared/models/data_stream';
 import { ArchitectureService } from '../../../services/architecture.service';
 import { ServiceProperyService } from '../../../services/service-propery.service';
 import { ServiceProperty, NewServiceProperty } from '../../../shared/models/service_property';
-import { Hardware } from '../../../shared/models/hardware';
 
 @Component({
   selector: 'app-service-dialog',
@@ -45,7 +43,7 @@ export class ServiceDialogComponent {
   }
 
   saveDescription(){
-    this.serviceService.updadeService(this.selectedService, this.selectedService.id/*, this.selectedEcu.id*/);
+    this.serviceService.updadeService(this.selectedService, this.selectedService.id);
     this.descriptionEditMod = false; 
   }
 
@@ -68,7 +66,7 @@ export class ServiceDialogComponent {
   }
 
   constructor(private serviceProperyService:ServiceProperyService, private architectureService:ArchitectureService, private serviceService:ServiceService, private hardwareService:HardwareService ,
-     private lineCreationService: LineCreationService/*, private renderer: Renderer2, private elementRef: ElementRef*/) { 
+     private lineCreationService: LineCreationService) { 
 
   }
 
@@ -142,20 +140,6 @@ subscribeOnServiceProperties(){
   );
 }
 
-/*selectedEcu: any | null = null;
-subscribeOnSelectedHardware(){
-  this.hardwareService.selectedHardware$.subscribe(
-      {
-        next: data => {
-          this.selectedEcu = data;
-        },
-        error: error => {
-          console.error(error);
-        }
-      }
-  );
-}*/
-
 ngOnInit(): void{
   this.subscribeOnSelectedArchitecture();
 
@@ -164,8 +148,6 @@ ngOnInit(): void{
   this.subscribeOnServices();
 
   this.subscribeOnDataStreams();
-
-  //this.subscribeOnSelectedHardware();
 
   this.subscribeOnServiceProperties();
   this.serviceProperyService.loadAllServiceProperties(this.selectedService.id);
@@ -179,10 +161,8 @@ ngOnInit(): void{
     }
 
   delete(){ 
-    //debugger
     var dataStreamsIdDeleteArray: any[] = [];
-   // var dataStreams = this.lineCreationService.getDataStreams();  
-    //var selectedService = this.serviceDetilsData.selectedService;
+
     for(let i = 0; i < this.dataStreams.length; i++){ 
       
       if(this.dataStreams[i].connectedFrom === this.selectedService.id.toString()){
@@ -196,30 +176,18 @@ ngOnInit(): void{
     this.deleteService(this.serviceDetilsData.selectedService.id);
 
     this.serviceService.setSelectedService(null)
-
-   // this.serviceDetilsData.showService = true;
-    
   }
 
   private deleteService(id: BigInt){
-  
-    //this.serviceDetilsData.dialogData.servicesMap.get(this.serviceDetilsData.dialogData.selectedEcu.id); 
     this.serviceService.deleteService(id);
   }
 
   private deleteDataStream(id: BigInt){
     this.lineCreationService.deleteDataStream(id).subscribe({ 
-      next: (data) => {
-        // Assuming the deletion was successful if this callback is called
-  
-        //console.log("architekture id  ", this.serviceDetilsData.dialogData.selectedArchitecture.id)
-        //var architektureId = this.serviceDetilsData.selectedArchitecture.id
-      
-        this.serviceDetilsData.getDataStreams(this.selectedArchitecture.id);
-        
+      next: (data) => {      
+        this.serviceDetilsData.getDataStreams(this.selectedArchitecture.id);  
       },
       error: (error) => {
-        // Handle the error here if needed
         console.error('Error deleting Data Stream', error);
       }
     });

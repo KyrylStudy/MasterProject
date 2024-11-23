@@ -28,7 +28,7 @@
              
            <div class="ecu">
 
-                <h4 class="ecu-name">{{ selectedEcu.label + "|" + selectedEcu.id }}</h4>
+                <h4 class="ecu-name">{{ selectedEcu.label }}</h4>  <!--{{ selectedEcu.label + "|" + selectedEcu.id }}-->
                 <div id="drag-boundary-{{selectedEcu.id}}" class="drag-boundary" [style.zoom]="zoomLevel">
 
                     <div *ngFor="let item of servicesMap.get(selectedEcu.id)"
@@ -42,7 +42,7 @@
                         (click)="onEcuClick(item, $event)"
                         [attr.serviceId]="item.id" 
                         [id]="item.id"  >
-                        <div class="label-draggable-item">{{ item.name + "|" + item.id }}</div>
+                        <div class="label-draggable-item">{{ item.name }}</div> <!--{{ item.name + "|" + item.id }}-->
                         <div class="content-draggable-item">S</div> 
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                 
                     <div *ngIf="serviceData.dialogData.canReach(selectedEcu.id.toString(), item1.id.toString()) && item1.type =='ECU'">
                     <div class="ecu1">
-                        <h4 class="ecu-name">{{ item1.label + "|" + item1.id }}</h4>
+                        <h4 class="ecu-name">{{ item1.label }}</h4>  <!--{{ item1.label + "|" + item1.id }}-->
                         <div id="drag-boundary-{{item1.id}}" class="drag-boundary" [style.zoom]="zoomLevel">
                             <div *ngFor="let item of servicesMap.get(item1.id)"
                                 cdkDrag
@@ -67,7 +67,7 @@
                                 [attr.serviceId]="item.id" 
                                 [id]="item.id"  
                                 #draggableItem>
-                                <div class="label-draggable-item">{{ item.name + "|" + item.id }}</div>
+                                <div class="label-draggable-item">{{ item.name }}</div>  <!--{{ item.name + "|" + item.id }}-->
                                 <div class="content-draggable-item">S</div> 
                             </div>
                         </div>
@@ -131,4 +131,5 @@
 <app-create-service-infrastructure-dialog *ngIf="showCreateServiceDialog" [createServiceDialogData]="dataFromServicesDashbord"></app-create-service-infrastructure-dialog>
 <app-data-stream-dialog *ngIf="showDataStreamDialog" [dataStreamsData]="dataFromServicesDashbord"></app-data-stream-dialog>  
 <app-service-dialog *ngIf="selectedService" [serviceDetilsData]="dataFromServicesDashbord" ></app-service-dialog> 
+<app-create-data-stream-dialog *ngIf="showCreateDataStreamDialog" [createDataStreamDialogData]="dataFromServicesDashbord"></app-create-data-stream-dialog>
 

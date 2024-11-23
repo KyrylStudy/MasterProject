@@ -1,32 +1,19 @@
-import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
-import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Hardware, NewHardware } from '../../../shared/models/hardware';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Hardware } from '../../../shared/models/hardware';
 import { Connection } from '../../../shared/models/connection-model';
 import { NewConnection } from '../../../shared/models/connection-model';
 import { HardwareService } from '../../../services/hardware.service';
-//import { HeaderComponent } from '../header/header.component';
-//import { sample_lines } from '../../../../data'; // Import sample_lines from data.ts
 import { LineCreationService } from '../../../services/data-stream.service';
-import { Software } from '../../../shared/models/software';
-import { NewSoftware } from '../../../shared/models/software';
 import { HardwareProperty } from '../../../shared/models/hardware_property';
-import { NewHardwareProperty } from '../../../shared/models/hardware_property';
 import { Architecture } from '../../../shared/models/architectures';
-import { NewArchitecture } from '../../../shared/models/architectures';
-//import { Connection } from '../../../shared/models/service';
 import { Service } from '../../../shared/models/service';
-import { Observable, concatMap, firstValueFrom, forkJoin, tap } from 'rxjs';
+import { firstValueFrom} from 'rxjs';
 import { DataStream } from '../../../shared/models/data_stream';
-import { MainInternalServiceService } from '../../../services/main-internal-service.service';
 import { ArchitectureService } from '../../../services/architecture.service';
 import { HardwarePropertyService } from '../../../services/hardware-property.service';
 import { ServiceService } from '../../../services/service.service';
-//import { WELCOME_ARCHITECTURE } from '../../../shared/models/architectures';
-import { ServiceProperty, NewServiceProperty } from '../../../shared/models/service_property';
 import { ServiceProperyService } from '../../../services/service-propery.service';
-import { DataStreamProperty, NewDataStreamProperty } from '../../../shared/models/data_stream_property';
 import { DataStreamPropertyService } from '../../../services/data-stream-property.service';
-
 
 
 
@@ -38,13 +25,9 @@ import { DataStreamPropertyService } from '../../../services/data-stream-propert
 })
 export class MainScreenComponent implements OnInit{
 
-
   showBusDialog: boolean = false;
-  
-  
   dialogData: any = this; //data for export
 
-  //showHardwareDetailsDialog: boolean = false;
   showHardwareDetailsDialogContent = false;
 
   openHarwareDetailsDialog(hardware: Hardware): void { 
@@ -60,8 +43,6 @@ export class MainScreenComponent implements OnInit{
     this.showHardwareDetailsDialogContent = false;
   }
 
-
-
   selectedConnection: Connection | null = null;
   openHardwareConnectionDetailsDialog(connection: Connection): void {
     this.updateCurrentState();
@@ -69,22 +50,12 @@ export class MainScreenComponent implements OnInit{
     this.showBusDialog = true;
   }
 
-
   onCloseBusDialog(): void {
     this.showBusDialog = false;
   }
 
- /* onCloseCreateHardwareDialog(): void {
-    this.showCreateHardwareDialog = null;
-  }*/
-
- //--------01.04.--------------
  connections: Connection[] = [];
  
- //------------------ 
-
-
-//moveEnabled = this.HeaderComponent.moveEnabled;
   ECUwidth = 150 + 4;//content + border 
   ECUheight = 75 + 4 + 25; //content + border + lable with margin
 
@@ -98,8 +69,8 @@ export class MainScreenComponent implements OnInit{
   dataFromHeader: any;
 
   constructor(private serviceService:ServiceService, private hardwarePropertyService:HardwarePropertyService, private architectureService:ArchitectureService,
-     private mainInternalService:MainInternalServiceService, private hardwareService:HardwareService, private lineCreationService: LineCreationService, private renderer: Renderer2,
-    private elementRef: ElementRef, private serviceProperyService:ServiceProperyService, private dataStreamPropertyService:DataStreamPropertyService) { 
+   private hardwareService:HardwareService, private lineCreationService: LineCreationService, private renderer: Renderer2,
+   private serviceProperyService:ServiceProperyService, private dataStreamPropertyService:DataStreamPropertyService) { 
 
 
   }
@@ -124,16 +95,16 @@ export class MainScreenComponent implements OnInit{
   }
 
   rewriteLine(event: any, ecu: Hardware) {
-    this.setElementPosition(event, ecu);//--------------------------------------------------попробовать рефакторизовать трохи 
+    this.setElementPosition(event, ecu);
 
-    //positioning of the connections in the case if user moves BUS (special case because of the different form of the element)
-    if (ecu.type == 'BUS') {
+    //positioning of the connections in the case if user moves Connector (special case because of the different form of the element)
+    if (ecu.type == 'Connector') {
 
       const ecuDragging: any = document.querySelector('.cdk-drag-dragging');
       var ecuRect = ecuDragging.getBoundingClientRect();//get position of dragging BUS
       var numberOfConnections = 0;
   
-      //calculate number of connections with this BUS(needed for calculation of horisontal gap on BUS between connections)
+      //calculate number of connections with this Connector(needed for calculation of horisontal gap on Connector between connections)
       for (let i = 0; i < this.connections.length; i++) {
           if (this.connections[i].connectedFrom == ecu.id.toString() ||
               this.connections[i].connectedTo == ecu.id.toString()) {
@@ -141,27 +112,26 @@ export class MainScreenComponent implements OnInit{
           }
       }
       
-      //calculate horisontal gap on BUS between connections
+      //calculate horisontal gap on Connector between connections
       var positionOfConnection = 0;
       if (numberOfConnections > 1) {
           positionOfConnection = Number(ecuRect.width) / (numberOfConnections - 1);
       }
   
-      
       var numberOfCurrentConnection = 0;
 
         for (let i = 0; i < this.connections.length; i++) {
-            //find connections connected to the BUS
+            //find connections connected to the Connector
             if (this.connections[i].connectedFrom == ecu.id.toString() ||
                 this.connections[i].connectedTo == ecu.id.toString()) {
 
-                //set coordinates of the end the connection in case, when the connection directed TO the BUS 
+                //set coordinates of the end the connection in case, when the connection directed TO the Connector 
                 if (this.connections[i].connectedTo == ecu.id.toString()) {
                   
                     this.connections[i].positionToX = (ecu.positionX + positionOfConnection * numberOfCurrentConnection).toString();
                     this.connections[i].positionToY = (ecu.positionY + 3 + 25).toString();
 
-                 //set coordinates of the end the connection in case, when the connection directed FROM the BUS    
+                 //set coordinates of the end the connection in case, when the connection directed FROM the Connector    
                 } else {
 
                     this.connections[i].positionFromX = (ecu.positionX + positionOfConnection * numberOfCurrentConnection).toString();
@@ -170,7 +140,6 @@ export class MainScreenComponent implements OnInit{
                 numberOfCurrentConnection++;
             }
         }
-    //positioning of the connections in the case if user moves everything else except BUS (ECU, Switch etc.)
     } else {
         for (let i = 0; i < this.connections.length; i++) {
             if (this.connections[i].connectedFrom == ecu.id.toString()) {
@@ -201,9 +170,6 @@ export class MainScreenComponent implements OnInit{
     
   }
 
-
-
-//----------------------01.04.--------------------------------------------------------02.04
 creatingLine = false;
 
 subscribeOnSelectedHardware(){
@@ -227,10 +193,6 @@ subscribeOnHardwares(){
       {
         next: data => {
           this.ecus = data;
-         /* for(let i = 0; i < this.ecus.length; i++){
-            this.propertiesOfAllHardwares[i] = this.hardwarePropertyService.loadAllHardwareProperties(hardwareItem.id)
-          }*/
-          
         },
         error: error => {
           console.error(error);
@@ -259,16 +221,13 @@ subscribeOnSelectedArchitecture(){
       {
         next: data => {
           this.selectedArchitecture = data;
-          
           if(this.selectedArchitecture)
           this.lineCreationService.getAllDataStreams(this.selectedArchitecture.id).subscribe(data=>{
-           // this.dataStreams = data;
             this.lineCreationService.setDataStreams(data);
           });
           if (data) {
            this.hardwareService.loadAllHardwares(data.id).subscribe(data => {
             this.serviceService.getAllServices(data);
-            //console.log(data)
            });
           }
           
@@ -334,7 +293,7 @@ subscribeOnDataStreams(){
   );
 }
 
-  ngOnInit(): void{
+  ngOnInit(): void{ 
 
     this.subscribeOnArchitectures();
     this.architectureService.loadAllArchitectures();
@@ -345,24 +304,18 @@ subscribeOnDataStreams(){
     this.subscribeOnDataStreams();
 
     this.subscribeOnSelectedArchitecture();
-    //this.architectureService.loadArchitecture(BigInt(1));
     
     this.subscribeOnHardwareProperties();
 
     this.subscribeOnServicesCount();
     this.subscribeOnServices();
-
   }
 
-//----------------------------------------------------------------------------------------------
   private getAllBus(architectureId: number){
     this.lineCreationService.getAllBus(architectureId).subscribe(data => {
       this.connections = data;
     });
   }
-
-
-//---------------------03.06
 
 private graph: { [key: string]: string[] } = {};
 
@@ -378,11 +331,11 @@ private graph: { [key: string]: string[] } = {};
         this.graph[line.connectedTo] = [];
       }
 
-      // Добавляем оба направления, так как порядок не важен
+      // Add both directions, as the order does not matter.
       this.graph[line.connectedFrom].push(line.connectedTo);
       this.graph[line.connectedTo].push(line.connectedFrom);
 
-      // Если соединение двустороннее, добавляем обратную связь
+      // If the connection is bidirectional, add feedback.
       if (line.twoWayConnection) {
         this.graph[line.connectedTo].push(line.connectedFrom);
         this.graph[line.connectedFrom].push(line.connectedTo);
@@ -390,7 +343,7 @@ private graph: { [key: string]: string[] } = {};
     });
   }
 
-  // Метод для проверки возможности перехода от одного блока к другому
+  // Method for Checking the Feasibility of Transitioning from One Block to Another
   public canReach(start: string, end: string): boolean {
     if (start === end) {
       return false;
@@ -423,12 +376,7 @@ private graph: { [key: string]: string[] } = {};
   }
 
 
-
-
-
 //----------------------------------------------------------------------------HEADER---START-----
-
-
 
 
    updateBus(Line: Connection, id: BigInt){
@@ -504,27 +452,23 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
       this.renderer.addClass(this.startTargetEcuElementNewBus, 'selected');
 
       this.startEcu = ecu;
-      if(this.startEcu.type == "BUS" /*|| this.startEcu.type == "CAN"*/){
+      if(this.startEcu.type == "Connector"){
         this.busWidthStart = event.target as HTMLElement;
       }
-      
-      //console.log('Selected start ECU:', this.startEcu);
+
     } else if (!this.endEcu) {
       // Second click, select end ECU and create line
       this.endTargetEcuElementNewBus = event.target as HTMLElement;
       this.renderer.addClass(this.endTargetEcuElementNewBus, 'selected');
 
       this.endEcu = ecu;
-      if(this.endEcu.type == "BUS" /*|| this.endEcu.type == "CAN"*/){
+      if(this.endEcu.type == "Connector"){
         this.busWidthEnd = event.target as HTMLElement;
       }
 
-      //console.log('Selected end ECU:', this.endEcu);
       if (this.startEcu !== this.endEcu) {
-        // Ensure start and end ECUs are different
-        
-        //----------------------------------------------------слалать из этого фрагмента функцию
-        if(((this.startEcu.type == "BUS"/*&&this.endEcu.type != "CAN") || (this.startEcu.type == "CAN"&&this.endEcu.type != "BUS"*/))){
+
+        if(this.startEcu.type == "Connector"){
 
           var numberOfConnections = 0;
           if(this.startEcu){
@@ -572,18 +516,10 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
           if(this.selectedArchitecture)
           this.lineCreationService.createBus(this.selectedArchitecture.id, newLine).subscribe(data =>{
             this.connections[this.connections.length] = data
-            //console.log(this.lines)
-            //this.setValueToShare(this);
+
           });
-  
-          console.log('New line created:', newLine); 
+        }else if(this.endEcu.type == "Connector"){
 
-//-------------------------------------------------------слалать из этого фрагмента функцию
-        }else if(((this.endEcu.type == "BUS"/*&&this.startEcu.type != "CAN") || (this.endEcu.type == "CAN"&&this.startEcu.type != "BUS"*/))){
-
-         // this.createNewConnction(this.endEcu, this.startEcu, this.busWidthEnd)
-          console.log('end = bus')
-          //this.busWidthEnd = event.target as HTMLElement;
           
           var numberOfConnections = 0;
           if(this.endEcu){
@@ -595,15 +531,12 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
             }
           }
 
-          //console.log('numberOfConnections  ', numberOfConnections)
-
           var positionOfConnection = 0;
           if(numberOfConnections >= 1){
             var positionOfConnection = Number(this.busWidthEnd.offsetWidth)/(numberOfConnections);
           }else{
             positionOfConnection = 0
           }
-          //console.log('positionOfConnection  ', positionOfConnection)
 
           numberOfConnections = 0;
           if(this.endEcu){
@@ -615,16 +548,13 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
                   }else {
                     this.connections[i].positionFromX = (this.endEcu.positionX + positionOfConnection*numberOfConnections).toString();
                   }
-                 // console.log('positionToX  ', this.lines[i].positionToX )
                   numberOfConnections++;
               }
             }
           }
 
-
-
           const newLine: NewConnection = {
-          name: 'Bus ' + (this.connections.length + 1), type: 'Bus',
+          name: 'Connection ' + (this.connections.length + 1), type: 'Connection',
           description: 'default description', 
           positionFromX: (this.startEcu.positionX + (this.ECUwidth / 2)).toString(),
           positionFromY: (this.startEcu.positionY + (this.ECUheight / 2)).toString(), 
@@ -637,17 +567,11 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
           if(this.selectedArchitecture)
           this.lineCreationService.createBus(this.selectedArchitecture.id, newLine).subscribe(data =>{
             this.connections[this.connections.length] = data
-            //console.log(this.lines)
-            //this.setValueToShare(this);
           });
-  
-         console.log('New line created:', newLine);
-
-//----------------------------------------------------------------------------------------------------------------------------          
+         
         }else{
-          console.log("ECU has to be connected with BUS or CAN")
+          console.log("ECU has to be connected with the Connector")
         }
-      
       } else {
         console.log('Start and end ECUs cannot be the same');
       }
@@ -662,20 +586,16 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
       }, 1000)
 
     }
-   // console.log('Creating a line between ECUs');
   } else {
     // Default ECU click handling logic
-    console.log("default ecu click")
   }
   }
-
   
   optionsDropdownCreate = [
     { id: 1, label: 'new Hardware' },
     { id: 3, label: 'new Connection' },
     { id: 4, label: 'new Architecture' },
   ];
-  //selectedOptionDropdownCreate: any = null;
 
 showCreateHardwareDialog: boolean = false;
 showCreateArchitectureDialog: boolean = false;
@@ -688,16 +608,9 @@ selectOptioWhatToCreate(option: any): void {
   } else if (option.label === 'new Architecture'){
     this.showCreateArchitectureDialog = true;  
   } 
-
   this.showDropdownCreate = false;  
-
 }
 
-
-userImage: string | null = null; // Path to user image, set to null if not available
-userName: string = 'John Doe'; // Default user name
-
-//--------------------02.04.2024
 creatingNewLine = false;
 
 //---------------------------------------------------HEADER---END------------------

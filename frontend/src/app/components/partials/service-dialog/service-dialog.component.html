@@ -1,6 +1,6 @@
 <div class="dialog-container">
     <div class="dialog-content">
-        <button class="dialog-close-button" (click)="close()">Close</button> <!-- Move close button here -->
+        <button class="dialog-close-button" (click)="close()">Close</button> 
         <div class="service-details" > 
         <div class="horisontal-container">
             <ng-container *ngIf="!nameEditMod">
@@ -52,15 +52,6 @@
             </ng-container>
         </div>
         
-        <!--<div>
-            <h4 class="ecu-properties-header">Properties:</h4> 
-            <ul>
-                <li *ngFor="let detail of serviceProperties">    поменять на проперти
-                    <span class="property-name">{{ detail.name }}:</span>
-                    <span class="property-value">{{ detail.value }}</span>
-                </li>
-            </ul>
-        </div> -->
         <div>
             <h4 class="ecu-properties-header">Properties:</h4>
 
@@ -100,7 +91,7 @@
             <input class="input-field" type="text" placeholder="Description" [(ngModel)]="this.propertyValue">
             <button class="add-property-button" (click)="addServiceProperty()">Add Property</button>
         </div>
-        <button class="dialog-delete-button" (click)="delete()">Delete</button> <!-- Move close button here -->
+        <button class="dialog-delete-button" (click)="delete()">Delete</button> 
     </div>
         </div>
       

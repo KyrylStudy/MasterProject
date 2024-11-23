@@ -1,8 +1,7 @@
-import { AfterViewInit, Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, forkJoin, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Service, newService } from '../shared/models/service';
-//import { EcuService } from './ecu.service';
 import { HardwareService } from './hardware.service';
 import { Hardware } from '../shared/models/hardware';
 
@@ -26,17 +25,6 @@ export class ServiceService /*implements OnInit, AfterViewInit*/{
         }
     );
   }
-  
-  //ngOnInit(): void{
-    //this.subscribeOnHardwares();
-    //this.ecuService.loadAllHardwares(1);
-    //console.log("srgrdhrthrt", this.hardwares)
-
- // }
-
-  /*ngAfterViewInit(): void {
-    this.subscribeOnHardwares();
-  }*/
 
 
     //--------secected-service
@@ -79,19 +67,15 @@ createService(newService: newService, ecuId: BigInt): void {
     tap(() => {
       this.loadAllServices(ecuId);
       this.getAllServices(this.hardwares)
-    })  // Обновить список после добавления
+    })  
   ).subscribe(); 
 }
 
-updadeService(Service: Service, id: BigInt/*, ecuId: BigInt*/): void {
+updadeService(Service: Service, id: BigInt): void {
   this.httpClient.put<Service>(`${this.serviceUrl + id + '/update'}`, Service).pipe(
-    tap(() => {
-      /*this.architectureService.getSelectedArchitecture().subscribe(data => {
-        this.selectedArchitecture = data;
-      })*/
-        //this.loadAllServices(ecuId); 
+    tap(() => { 
         this.getAllServices(this.hardwares);
-    })  // Обновить список после изменения
+    })  
   ).subscribe();
 }
 
@@ -107,7 +91,7 @@ deleteService(id: BigInt): void {
         this.loadAllServices(this.selectedHardware.id);
       }
       this.getAllServices(this.hardwares)
-    })  // Обновить список после удаления
+    })  
   ).subscribe();
 }
 
@@ -126,9 +110,10 @@ allServicesInArchitectureMap$ = this.allServicesInArchitectureMapSubject.asObser
 
 
 
-  getAllServices(hardwares: Hardware[]): void {
+  getAllServices(hardwares: Hardware[]): any {
     this.subscribeOnHardwares();
 
+   this.servicesMap = new Map();
     if (hardwares.length) {
 
       hardwares.map(hardware => this.getAllServicesByEcuId(hardware.id).subscribe(
