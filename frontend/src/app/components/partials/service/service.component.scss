@@ -1,5 +1,5 @@
-$ServiceWidth: 40px;
-$ServiceHeight: 40px;
+$ServiceWidth: 80px;
+$ServiceHeight: 80px;
 
 $sender-color: #0800ff;
 $receiver-color: red;
@@ -106,11 +106,11 @@ $receiver-color: red;
 }
 
 .label-draggable-item {
-  height: 10px;
+  height: 16px;
   width: 100%;
   font-weight: bold;
   margin-bottom: 2px;
-  font-size: 8px;
+  font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -126,7 +126,7 @@ $receiver-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.7rem;
+  font-size: 16px;
 }
 
 .connestion-line-container {

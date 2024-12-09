@@ -59,38 +59,41 @@ export class ServiceComponent {
     })
 
     const parentEcu:any = document.getElementById(`drag-boundary-${ParentEcuId}`);
-    const parentPosition = parentEcu.getBoundingClientRect();
 
-    var positionX =  parentPosition.left;
-    var positionY =  parentPosition.top;
+    if(parentEcu){
+      const parentPosition = parentEcu.getBoundingClientRect();
 
-    const workArea:any = document.getElementById("horisontal-wrapper");
-    const workAreaPosition = workArea.getBoundingClientRect();
+      var positionX =  parentPosition.left;
+      var positionY =  parentPosition.top;
 
-    var workAreaPositionX =  workAreaPosition.left;
-    var workAreaPositionY =  workAreaPosition.top;
+      const workArea:any = document.getElementById("horisontal-wrapper");
+      const workAreaPosition = workArea.getBoundingClientRect();
+  
+      var workAreaPositionX =  workAreaPosition.left;
+      var workAreaPositionY =  workAreaPosition.top;
 
-if(this.zoomLevel === 1){
-  for (let i = 0; i < this.dataStreams.length; i++) {
-    if (this.dataStreams[i].connectedFrom === service.id.toString()) {
-        this.dataStreams[i].positionFromX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX - 2).toString();
-        this.dataStreams[i].positionFromY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY - 5).toString();
-    } else if (this.dataStreams[i].connectedTo === service.id.toString()) {
-        this.dataStreams[i].positionToX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX - 2).toString();
-        this.dataStreams[i].positionToY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY - 5).toString();
+     // if(this.zoomLevel === 1){
+        for (let i = 0; i < this.dataStreams.length; i++) {
+          if (this.dataStreams[i].connectedFrom === service.id.toString()) {
+              this.dataStreams[i].positionFromX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX - 2).toString();
+              this.dataStreams[i].positionFromY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY - 5).toString();
+          } else if (this.dataStreams[i].connectedTo === service.id.toString()) {
+              this.dataStreams[i].positionToX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX - 2).toString();
+              this.dataStreams[i].positionToY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY - 5).toString();
+          }
+      //  }
+      }/*else if(this.zoomLevel === 2){
+        for (let i = 0; i < this.dataStreams.length; i++) {
+          if (this.dataStreams[i].connectedFrom === service.id.toString()) {
+              this.dataStreams[i].positionFromX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX + (38)).toString();
+              this.dataStreams[i].positionFromY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY + (28)).toString();
+          } else if (this.dataStreams[i].connectedTo === service.id.toString()) {
+              this.dataStreams[i].positionToX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX + (38)).toString();
+              this.dataStreams[i].positionToY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY + (28)).toString();
+          }
+        }
+      }  */ 
     }
-  }
-}else if(this.zoomLevel === 2){
-  for (let i = 0; i < this.dataStreams.length; i++) {
-    if (this.dataStreams[i].connectedFrom === service.id.toString()) {
-        this.dataStreams[i].positionFromX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX + (38)).toString();
-        this.dataStreams[i].positionFromY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY + (28)).toString();
-    } else if (this.dataStreams[i].connectedTo === service.id.toString()) {
-        this.dataStreams[i].positionToX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX + (38)).toString();
-        this.dataStreams[i].positionToY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY + (28)).toString();
-    }
-  }
-}   
 }
 
 
@@ -255,8 +258,8 @@ ngOnInit(): void {
   this.servicesMap.forEach((items: any[], ecuId: any) => {
     if (ecuId !== this.selectedEcu.id) {
       items.forEach((item) => {
-        if (item.positionY > 300) {
-          item.positionY = 200;
+        if (item.positionY > 190) {
+          item.positionY = 190;
         }
       });
     }
@@ -296,8 +299,8 @@ private getDataStreams(architectureId: number){
 
 
 //------------------------------create new line(data stream)
-ServiceWidth = 40 + 4;//content + border 
-ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
+ServiceWidth = 80 + 4;//content + border 
+ServiceHeight = 80 + 4 + 12; //content + border + lable with margin
 
 
   startTargetEcuElementNewBus: any;
@@ -350,9 +353,11 @@ ServiceHeight = 40 + 4 + 12; //content + border + lable with margin
 
           this.lineCreationService.createDataStream(this.selectedArchitecture.id, newDataStream).subscribe(data =>{
 
-            this.getDataStreams(this.selectedArchitecture.id)
-   
+            this.getDataStreams(this.selectedArchitecture.id);
+             
           });
+
+          
 
         } else {
           alert('Start and end Service cannot be the same');

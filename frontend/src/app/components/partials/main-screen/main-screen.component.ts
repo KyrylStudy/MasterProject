@@ -97,14 +97,14 @@ export class MainScreenComponent implements OnInit{
   rewriteLine(event: any, ecu: Hardware) {
     this.setElementPosition(event, ecu);
 
-    //positioning of the connections in the case if user moves Connector (special case because of the different form of the element)
-    if (ecu.type == 'Connector') {
+    //positioning of the connections in the case if user moves Network (special case because of the different form of the element)
+    if (ecu.type == 'Network') {
 
       const ecuDragging: any = document.querySelector('.cdk-drag-dragging');
       var ecuRect = ecuDragging.getBoundingClientRect();//get position of dragging BUS
       var numberOfConnections = 0;
   
-      //calculate number of connections with this Connector(needed for calculation of horisontal gap on Connector between connections)
+      //calculate number of connections with this Network(needed for calculation of horisontal gap on Network between connections)
       for (let i = 0; i < this.connections.length; i++) {
           if (this.connections[i].connectedFrom == ecu.id.toString() ||
               this.connections[i].connectedTo == ecu.id.toString()) {
@@ -112,7 +112,7 @@ export class MainScreenComponent implements OnInit{
           }
       }
       
-      //calculate horisontal gap on Connector between connections
+      //calculate horisontal gap on Network between connections
       var positionOfConnection = 0;
       if (numberOfConnections > 1) {
           positionOfConnection = Number(ecuRect.width) / (numberOfConnections - 1);
@@ -121,17 +121,17 @@ export class MainScreenComponent implements OnInit{
       var numberOfCurrentConnection = 0;
 
         for (let i = 0; i < this.connections.length; i++) {
-            //find connections connected to the Connector
+            //find connections connected to the Network
             if (this.connections[i].connectedFrom == ecu.id.toString() ||
                 this.connections[i].connectedTo == ecu.id.toString()) {
 
-                //set coordinates of the end the connection in case, when the connection directed TO the Connector 
+                //set coordinates of the end the connection in case, when the connection directed TO the Network 
                 if (this.connections[i].connectedTo == ecu.id.toString()) {
                   
                     this.connections[i].positionToX = (ecu.positionX + positionOfConnection * numberOfCurrentConnection).toString();
                     this.connections[i].positionToY = (ecu.positionY + 3 + 25).toString();
 
-                 //set coordinates of the end the connection in case, when the connection directed FROM the Connector    
+                 //set coordinates of the end the connection in case, when the connection directed FROM the Network    
                 } else {
 
                     this.connections[i].positionFromX = (ecu.positionX + positionOfConnection * numberOfCurrentConnection).toString();
@@ -452,7 +452,7 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
       this.renderer.addClass(this.startTargetEcuElementNewBus, 'selected');
 
       this.startEcu = ecu;
-      if(this.startEcu.type == "Connector"){
+      if(this.startEcu.type == "Network"){
         this.busWidthStart = event.target as HTMLElement;
       }
 
@@ -462,13 +462,13 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
       this.renderer.addClass(this.endTargetEcuElementNewBus, 'selected');
 
       this.endEcu = ecu;
-      if(this.endEcu.type == "Connector"){
+      if(this.endEcu.type == "Network"){
         this.busWidthEnd = event.target as HTMLElement;
       }
 
       if (this.startEcu !== this.endEcu) {
 
-        if(this.startEcu.type == "Connector"){
+        if(this.startEcu.type == "Network"){
 
           var numberOfConnections = 0;
           if(this.startEcu){
@@ -518,7 +518,7 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
             this.connections[this.connections.length] = data
 
           });
-        }else if(this.endEcu.type == "Connector"){
+        }else if(this.endEcu.type == "Network"){
 
           
           var numberOfConnections = 0;
@@ -570,7 +570,7 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
           });
          
         }else{
-          console.log("ECU has to be connected with the Connector")
+          console.log("ECU has to be connected with the Network")
         }
       } else {
         console.log('Start and end ECUs cannot be the same');
@@ -619,37 +619,43 @@ async generateToken() {
   // Map each hardware item to a Promise that loads its properties
   const hardwareWithProperties = await Promise.all(
     this.ecus.map(async (hardwareItem) => {
+      const { positionX, positionY, connectedTo, ...hardwareWithoutPosition } = hardwareItem; // Exclude unwanted properties
+
       const properties = await firstValueFrom(this.hardwarePropertyService.loadAllHardwareProperties(hardwareItem.id));
       const services = await Promise.all(
         (this.servicesMap.get(hardwareItem.id) || []).map(async (service) => {
+          const { positionX, positionY, connectedTo, ...serviceWithoutPosition } = service; // Exclude unwanted properties
+
           // Filter dataStreams that belong to the service
           const serviceDataStreams = this.dataStreams.filter(
             (dataStream) =>
               dataStream.connectedFrom === service.id.toString() || dataStream.connectedTo === service.id.toString()
           );
 
+          let dataStreamsForToken = [];
+          for (let i = 0; i < serviceDataStreams.length; i++) {
+            const { positionFromX, positionFromY, positionToX, positionToY, ...dataStreamWithoutPosition } =
+              serviceDataStreams[i]; // Exclude unwanted properties
 
-          let dataStreamsForTocken = [];
-          for(let i = 0; i < serviceDataStreams.length; i++){
-            dataStreamsForTocken[i] = {
-              ...serviceDataStreams[i],
-              properties: await firstValueFrom(this.dataStreamPropertyService.loadAllDataStreamProperties(serviceDataStreams[i].id))
-            }
+            dataStreamsForToken[i] = {
+              ...dataStreamWithoutPosition,
+              properties: await firstValueFrom(this.dataStreamPropertyService.loadAllDataStreamProperties(serviceDataStreams[i].id)),
+            };
           }
 
           // Load service properties asynchronously
           const serviceProperties = await firstValueFrom(this.serviceProperyService.loadAllServiceProperties(service.id));
 
           return {
-            ...service,
+            ...serviceWithoutPosition,
             properties: serviceProperties || [], // Ensure properties are correctly attached
-            dataStreams: dataStreamsForTocken, // Assign filtered dataStreams to the service
+            dataStreams: dataStreamsForToken, // Assign filtered dataStreams to the service
           };
         })
       );
 
       return {
-        ...hardwareItem,
+        ...hardwareWithoutPosition,
         properties: properties || [], // Use the loaded properties or an empty array if none are found
         services, // Attach services with their corresponding dataStreams
       };
@@ -673,10 +679,6 @@ async generateToken() {
 
   return jsonToken;
 }
-
-
-
-
 
 
 

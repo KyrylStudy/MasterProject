@@ -56,7 +56,7 @@ subscribeOnSelectedArchitecture(){
 
   options = [
     { id: 1, label: 'ECU' },
-    { id: 2, label: 'Connector' }
+    { id: 2, label: 'Network' }
   ];
 
 
@@ -68,7 +68,7 @@ subscribeOnSelectedArchitecture(){
 
       this.showDropdown = !this.showDropdown;
       this.selectedOption = option;
-    }else if(option.label === 'Connector'){
+    }else if(option.label === 'Network'){
 
       this.showDropdown = !this.showDropdown;
       this.selectedOption = option;

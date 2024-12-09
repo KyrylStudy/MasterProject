@@ -75,18 +75,19 @@
                 </div>
             </div>  
         </div> 
+       
         <svg id="svg-container" class="connestion-line-container" [style.zoom]="zoomLevel"> 
 
             <defs>
                 <marker
                   id="arrowhead"
-                  refX="30" 
-                  refY="2.5" 
-                  markerWidth="12"
-                  markerHeight="5" 
+                  refX="60" 
+                  refY="5" 
+                  markerWidth="24"
+                  markerHeight="10" 
                   orient="auto-start-reverse">
                   
-                  <polygon points="0 0, 12 2.5, 0 5" fill="black" />
+                  <polygon points="0 0, 24 5, 0 10" fill="black" />
                 </marker>
             </defs>
 
@@ -94,17 +95,17 @@
                 <!-- A marker to be used as an arrowhead -->
                 <marker
                   id="arrow"
-                  refX="30" 
-                  refY="2.5" 
-                  markerWidth="12"
-                  markerHeight="5" 
+                  refX="60" 
+                  refY="5" 
+                  markerWidth="24"
+                  markerHeight="10" 
                   orient="auto-start-reverse">
                   
-                  <polygon points="0 0, 12 2.5, 0 5" fill="black" />
+                  <polygon points="0 0, 24 5, 0 10" fill="black" />
                 </marker>
               </defs>
 
-
+            
             <line class="connestion-line" *ngFor="let line of dataStreams" marker-end="url(#arrow)"
                 [attr.marker-start]="line.twoWayConnection === true ? 'url(#arrowhead)' : ''"
               
@@ -113,7 +114,7 @@
                   [attr.x2]="line.positionToX" 
                   [attr.y2]="line.positionToY"
                   [attr.connectedFrom]="line.connectedFrom"
-                  [attr.connectedTo]="line.connectedTo"
+                  [attr.connectedTo]="line.connectedTo" 
                   [attr.dataStreamId]="line.id"
                   (dblclick)="openDataStreamDetails(line)"/>
             <line class="connestion-line-overlay" *ngFor="let line of dataStreams" 
@@ -124,8 +125,10 @@
                   [attr.connectedFrom]="line.connectedFrom"
                   [attr.connectedTo]="line.connectedTo"
                  
-                  (dblclick)="openDataStreamDetails(line)"/>     
+                  (dblclick)="openDataStreamDetails(line)"/> 
+                
         </svg>
+
     </div>
 </div>
 <app-create-service-infrastructure-dialog *ngIf="showCreateServiceDialog" [createServiceDialogData]="dataFromServicesDashbord"></app-create-service-infrastructure-dialog>

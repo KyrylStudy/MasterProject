@@ -1,24 +1,24 @@
-  .green-button {
-    margin-left: 20px;
-    padding: 10px 20px;
-    background-color: white;
-    color: #252525;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 2px solid #009BA0;
-    cursor: pointer;
-    z-index: 10;
-  }
-  
-  .green-button:hover {
-    background-color: #cef8fa; /* Darker shade for hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
-  }
-  
-  .green-button:active {
-    background-color: #009BA0;
-    color: white;
-  }
+.green-button {
+  margin-left: 5px;
+  padding: 10px 20px;
+  background-color: white;
+  color: #252525;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 2px solid #009BA0;
+  cursor: pointer;
+  z-index: 10;
+} 
+
+.green-button:hover {
+  background-color: #cef8fa; /* Darker shade for hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+}
+
+.green-button:active {
+  background-color: #009BA0;
+  color: white;
+}
   
   .horisontal-container {
     display: flex;
@@ -84,7 +84,7 @@
   
   .input-sidebar {
     display: grid;
-    grid-template-columns: 20% 70% 10%; /* 80/20 split */
+    grid-template-columns: 20% 69% 10%; /* 80/20 split */
     gap: 5px;
     margin-bottom: 10px;
   }
@@ -139,7 +139,9 @@
     color: white;
   }
   
-  .dialog-delete-button { 
+  .dialog-delete-button {
+    position: absolute;
+    bottom: 10px;
     padding: 10px 20px;
     border-radius: 6px;
     cursor: pointer;

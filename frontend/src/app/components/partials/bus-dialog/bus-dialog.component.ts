@@ -20,9 +20,46 @@ export class BusDialogComponent {
 
   delete(): void { 
     var connectedFromEcuId = this.dialogData.selectedConnection.connectedFrom;
-   // var connectedFromEcu: Hardware | null = null;
     var connectedToEcuId = this.dialogData.selectedConnection.connectedTo;
-   // var connectedToEcu: Hardware | null = null;
+
+  var connectedECU: any;
+   for(let i = 0; i < this.dialogData.ecus.length; i++){
+    if((this.dialogData.ecus[i].id == connectedFromEcuId && this.dialogData.ecus[i].type == "ECU") ||
+     (this.dialogData.ecus[i].id == connectedToEcuId && this.dialogData.ecus[i].type == "ECU")){
+      connectedECU = this.dialogData.ecus[i];
+      
+     }
+   }
+
+   // Check for existiond Data Streams between connected ECU and some other ECU
+   for (let j = 0; j < this.dialogData.dataStreams.length; j++) {
+    let connectedFromKey: number | undefined;
+    let connectedToKey: number | undefined;
+
+    // Search for keys for connectedFrom and connectedTo
+    for (const [key, services] of this.dialogData.servicesMap.entries()) {
+      if (services.some((service: { id: { toString: () => string; }; }) => service.id.toString() === this.dialogData.dataStreams[j].connectedFrom)) {
+        connectedFromKey = key;
+      }
+      if (services.some((service: { id: { toString: () => string; }; }) => service.id.toString() === this.dialogData.dataStreams[j].connectedTo)) {
+        connectedToKey = key;
+      }
+
+      // If both keys are found, break the loop
+      if ((connectedFromKey === connectedECU.id && connectedToKey !== connectedECU.id) || (connectedFromKey !== connectedECU.id && connectedToKey === connectedECU.id)) {
+       break;
+     }
+    }
+
+    // Check if connectedFrom and connectedTo belong to different keys
+    if ((connectedFromKey === connectedECU.id && connectedToKey !== connectedECU.id) || (connectedFromKey !== connectedECU.id && connectedToKey === connectedECU.id)) {
+     alert("Connection can not be deleted if Data Streams go through it");
+      return;
+    }
+  }
+
+
+
     for(let i = 0; i < this.dialogData.ecus.length; i++){
       if(this.dialogData.ecus[i].id == connectedFromEcuId){
         //connectedFromEcu = this.dialogData.ecus[i];

@@ -135,6 +135,7 @@ export class DataStreamDialogComponent implements OnInit{
   }
 
   close(){
+    this.dataStreamsData.updateCurrentState();
     this.dataStreamsData.showDataStreamDialog = false;
   }
   

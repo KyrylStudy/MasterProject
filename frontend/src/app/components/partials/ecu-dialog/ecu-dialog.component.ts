@@ -138,7 +138,13 @@ export class DialogComponent implements OnInit{
   }
 
   delete(): void {
+    var servicesOfSelectedEcu = this.serviceService.servicesMap.get(this.selectedEcu.id);
 
+    if (servicesOfSelectedEcu?.length) {
+      alert("ECU can not be deleted if it has Services");
+      return;
+    }
+    
     let servicesInNaiborEcu: any[] = [];
     for (let i = 0; i < this.dialogData.connections.length; i++) {
       if (this.dialogData.connections[i].connectedFrom == this.selectedEcu.id.toString()) {
@@ -166,7 +172,7 @@ export class DialogComponent implements OnInit{
     
             // Check if connectedFrom and connectedTo belong to different keys
             if (connectedFromKey !== undefined && connectedToKey !== undefined && connectedFromKey !== connectedToKey) {
-              alert("Connector can be deleted only if no Data Streams go through it");
+              alert("Network can not be deleted if Data Streams go through it");
               return;
             }
           }
@@ -196,7 +202,7 @@ export class DialogComponent implements OnInit{
     
             // Check if connectedFrom and connectedTo belong to different keys
             if (connectedFromKey !== undefined && connectedToKey !== undefined && connectedFromKey !== connectedToKey) {
-              alert("Connector can be deleted only if no Data Streams go through it");
+              alert("Network can not be deleted if Data Streams go through it");
               return;
             }
           }
@@ -224,20 +230,18 @@ export class DialogComponent implements OnInit{
       this.dialogData.connections = this.dialogData.connections.filter((item: { id: any; }) => item.id != busIdDeleteArray[i]);
     }
 
-    var servicesOfSelectedEcu = this.serviceService.servicesMap.get(this.selectedEcu.id);
+    //var servicesOfSelectedEcu = this.serviceService.servicesMap.get(this.selectedEcu.id);
 
-      if(servicesOfSelectedEcu){
+    /*  if(servicesOfSelectedEcu){
         for(let i = 0; i < servicesOfSelectedEcu.length; i++){
           for(let j = 0; j < this.dataStreams.length; j++){
             if(servicesOfSelectedEcu[i].id.toString() == this.dataStreams[j].connectedFrom ||
              servicesOfSelectedEcu[i].id.toString() == this.dataStreams[j].connectedTo){
-              this.lineCreationService.deleteDataStream(this.dataStreams[j].id).subscribe(data => {
-                //this.lineCreationService.getAllDataStreams(this.selectedArchitecture.id)
-              });
+              this.lineCreationService.deleteDataStream(this.dataStreams[j].id).subscribe(data => {});
             }
           }
         }
-      }
+      }*/
     this.closeDialog.emit(true);
   }
 

@@ -55,7 +55,7 @@
 <div class="main-screen">
     <div class="horisontal-wrapper">
         <div class="start-screen" *ngIf="selectedArchitecture?.id === 0">
-            <p>Please, select an Architecture from the list above!</p>
+            <p>Select an Architecture from the list above or create one!</p>
         </div>
 
        <!-- <div class="zoom-buttons-wrapper">
@@ -88,7 +88,7 @@
                             <div class="content-draggable-item">{{ servicesCountMap.get(item.id) || 0 }} Services</div> <!--number of services-->
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="item.type == 'Connector'"> 
+                    <ng-container *ngIf="item.type == 'Network'"> 
                         <div class="label-bus">{{ item.label }}</div>  <!--{{ item.label + "|" + item.id}}-->
                         <div class="bus">
                         </div>
