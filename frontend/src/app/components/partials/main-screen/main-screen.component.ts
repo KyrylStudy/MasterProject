@@ -662,12 +662,19 @@ async generateToken() {
     })
   );
 
+  // Filter and transform connections to include only the required properties
+  const filteredConnections = this.connections.map(connection => {
+    const { id, name, type, connectedFrom, connectedTo } = connection; // Destructure only the required properties
+    return { id, name, type, connectedFrom, connectedTo }; // Reconstruct the object with only the desired properties
+  });
+
   // Construct the token object with each hardware item containing its associated services and properties
   const token = {
     architecture: {
       name: this.selectedArchitecture?.name,
       description: this.selectedArchitecture?.description,
       hardware: hardwareWithProperties,
+      connections: filteredConnections // Use the filtered connections
     },
   };
 
@@ -675,10 +682,20 @@ async generateToken() {
   const jsonToken = JSON.stringify(token);
   console.log("Generated Token:", jsonToken);
 
-  // Further logic to handle the token, like displaying it or sending it to a server
+  // Automatically download the JSON token
+  const blob = new Blob([jsonToken], { type: "application/json" }); 
+  const url = URL.createObjectURL(blob); 
+
+  const a = document.createElement("a"); 
+  a.href = url; 
+  a.download = "token.json"; 
+  a.click(); 
+
+  URL.revokeObjectURL(url); 
 
   return jsonToken;
 }
+
 
 
 
