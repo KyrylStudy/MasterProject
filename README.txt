@@ -1,4 +1,4 @@
-To work with the Architecture Platform for Designing Secure Automotive Systems
+To work with the Architecture Platform for Designing Secure Automotive Systems:
 
 
 1. Build and run docker containers(run in command line in the "Docker" directory):
@@ -13,6 +13,11 @@ docker compose up --build --force-recreate
 Note:   1. You can't connect ECU elements directly to each other. ECU must first be connected to the network and then to another ECU.
 
 	2. Before to create Data Streams in the ECUs you need to connect these ECUs to the Network.
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
 
 
 To run the Architecture Platform for Designing Secure Automotive Systems in development mode:
