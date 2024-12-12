@@ -13,7 +13,6 @@
     </div>
 </div>
 <button class="select-all-services-button" (click)="selectAllServices()">Select all Services</button>
-<!--<button class="service-save-button" (click)="updateCurrentState()">Save</button>-->
 
 <!--<div class="zoom-button-set">
     <button class="zoom-button" (click)="zoomIn()">+</button>
@@ -28,7 +27,7 @@
              
            <div class="ecu">
 
-                <h4 class="ecu-name">{{ selectedEcu.label }}</h4>  <!--{{ selectedEcu.label + "|" + selectedEcu.id }}-->
+                <h4 class="ecu-name">{{ selectedEcu.label }}</h4>  
                 <div id="drag-boundary-{{selectedEcu.id}}" class="drag-boundary" [style.zoom]="zoomLevel">
 
                     <div *ngFor="let item of servicesMap.get(selectedEcu.id)"
@@ -42,7 +41,7 @@
                         (click)="onEcuClick(item, $event)"
                         [attr.serviceId]="item.id" 
                         [id]="item.id"  >
-                        <div class="label-draggable-item">{{ item.name }}</div> <!--{{ item.name + "|" + item.id }}-->
+                        <div class="label-draggable-item">{{ item.name }}</div> 
                         <div class="content-draggable-item">S</div> 
                     </div>
                 </div>
@@ -53,7 +52,7 @@
                 
                     <div *ngIf="serviceData.dialogData.canReach(selectedEcu.id.toString(), item1.id.toString()) && item1.type =='ECU'">
                     <div class="ecu1">
-                        <h4 class="ecu-name">{{ item1.label }}</h4>  <!--{{ item1.label + "|" + item1.id }}-->
+                        <h4 class="ecu-name">{{ item1.label }}</h4>  
                         <div id="drag-boundary-{{item1.id}}" class="drag-boundary" [style.zoom]="zoomLevel">
                             <div *ngFor="let item of servicesMap.get(item1.id)"
                                 cdkDrag
@@ -67,7 +66,7 @@
                                 [attr.serviceId]="item.id" 
                                 [id]="item.id"  
                                 #draggableItem>
-                                <div class="label-draggable-item">{{ item.name }}</div>  <!--{{ item.name + "|" + item.id }}-->
+                                <div class="label-draggable-item">{{ item.name }}</div> 
                                 <div class="content-draggable-item">S</div> 
                             </div>
                         </div>

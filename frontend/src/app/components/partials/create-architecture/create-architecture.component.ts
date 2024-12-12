@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NewArchitecture } from '../../../shared/models/architectures';
 import { ArchitectureService } from '../../../services/architecture.service';
 
@@ -24,7 +24,6 @@ export class CreateArchitectureComponent {
   newArchitectureDescription: any = null;
   architecture: any = 'new Architecture';
 
-
   save(){
       if (this.newArchitectureName && this.newArchitectureDescription) {
         if(this.createArchitectureData.architectures){
@@ -33,15 +32,12 @@ export class CreateArchitectureComponent {
             type: 'Architecture',
             description: this.newArchitectureDescription,
             };
-
             this.architectureService.createArchitecture(newArchitecture)
         }
         this.createArchitectureData.showCreateArchitectureDialog = false;
       }else {
         console.log("All required feelds have to be filled!")
       }
-      
     }
-    
   }
 

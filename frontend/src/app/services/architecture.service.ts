@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Architecture, NewArchitecture } from '../shared/models/architectures';
 import { HttpClient } from '@angular/common/http';
-//import { ServiceService } from './service.service';
 import { START_ARCHITECTURE } from '../shared/models/architectures';
 
 @Injectable({
@@ -10,18 +9,13 @@ import { START_ARCHITECTURE } from '../shared/models/architectures';
 })
 export class ArchitectureService {
 
-  constructor(private httpClient: HttpClient/*, private serviceService: ServiceService*/) { }
-
-  //---------------Architecture
+  constructor(private httpClient: HttpClient) { }
 
   private selectedArchitectureSubject = new BehaviorSubject<Architecture | null>(START_ARCHITECTURE);
   selectedArchitecture$ = this.selectedArchitectureSubject.asObservable();
 
   setSelectedArchitecture(selectedArchitecture: Architecture | null): void {
     this.selectedArchitectureSubject.next(selectedArchitecture);
-    /*this.selectedArchitectureSubject.pipe(
-      tap(selectedArchitecture => this.selectedArchitectureSubject.next(selectedArchitecture))
-    ).subscribe();*/
   }
 
   getSelectedArchitecture(): Observable<Architecture | null> {

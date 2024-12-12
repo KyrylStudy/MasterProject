@@ -1,6 +1,4 @@
-import { Component, Input,/*, Output*/ 
-OnInit} from '@angular/core';
-import { Architecture } from '../../../shared/models/architectures';
+import { Component, Input, OnInit} from '@angular/core';
 import { ArchitectureService } from '../../../services/architecture.service';
 
 @Component({
@@ -55,6 +53,7 @@ export class ArchitectureDetailsDialogComponent implements OnInit{
   if(this.selectedArchitecture){
     this.architectureService.deleteArchitecture(this.selectedArchitecture.id)
     this.architectureDetailsData.showArchitectureDetails = false;
+    this.architectureDetailsData.connections = [];
   }
  }
 

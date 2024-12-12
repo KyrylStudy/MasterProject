@@ -13,12 +13,10 @@ export class CreateDataStreamDialogComponent {
     this.createDataStreamDialogData.showCreateDataStreamDialog = false;
   }
 
-  
   newDataStreamName: any = null;
   newDataStreamDescription: any = null;
 
   save(){
-
     if (this.newDataStreamName && this.newDataStreamDescription) {
       this.createDataStreamDialogData.dataStreamName = this.newDataStreamName;
       this.createDataStreamDialogData.dataStreamDescription = this.newDataStreamDescription;
@@ -26,6 +24,5 @@ export class CreateDataStreamDialogComponent {
     }else {
       console.log("All required feelds have to be filled!")
     }
-}
-
+  }
 }

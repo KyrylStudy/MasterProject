@@ -10,8 +10,6 @@ export class ServiceProperyService {
 
   constructor(private httpClient: HttpClient,) { }
 
-  //--------------Hardware(property)
-
   private serviceProreriesSubject = new BehaviorSubject<ServiceProperty[]>([]);
   serviceProreries$ = this.serviceProreriesSubject.asObservable();
 

@@ -29,23 +29,19 @@ export class ServiceComponent {
     })
   }
 
-
   goBack(){ 
     this.serviceData.showService = false; 
     this.serviceData.dialogData.showHardwareDetailsDialogContent = true; 
   }
-
 
   openServiceDetailsDialog(service: Service){ 
     this.updateCurrentState();
     this.serviceService.setSelectedService(service)
   }
 
-
   constructor(private architectureService:ArchitectureService, private serviceService:ServiceService, private renderer: Renderer2, private el: ElementRef,
      private hardwareService: HardwareService, private lineCreationService: LineCreationService) { 
   }
- 
 
   rewriteLine(service: Service) {
     var ParentEcuId:any;
@@ -72,7 +68,6 @@ export class ServiceComponent {
       var workAreaPositionX =  workAreaPosition.left;
       var workAreaPositionY =  workAreaPosition.top;
 
-     // if(this.zoomLevel === 1){
         for (let i = 0; i < this.dataStreams.length; i++) {
           if (this.dataStreams[i].connectedFrom === service.id.toString()) {
               this.dataStreams[i].positionFromX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX - 2).toString();
@@ -81,22 +76,9 @@ export class ServiceComponent {
               this.dataStreams[i].positionToX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX - 2).toString();
               this.dataStreams[i].positionToY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY - 5).toString();
           }
-      //  }
-      }/*else if(this.zoomLevel === 2){
-        for (let i = 0; i < this.dataStreams.length; i++) {
-          if (this.dataStreams[i].connectedFrom === service.id.toString()) {
-              this.dataStreams[i].positionFromX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX + (38)).toString();
-              this.dataStreams[i].positionFromY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY + (28)).toString();
-          } else if (this.dataStreams[i].connectedTo === service.id.toString()) {
-              this.dataStreams[i].positionToX = (service.positionX + (this.ServiceWidth / 2) + positionX - workAreaPositionX + (38)).toString();
-              this.dataStreams[i].positionToY = (service.positionY + (this.ServiceHeight / 2) + positionY - workAreaPositionY + (28)).toString();
-          }
-        }
-      }  */ 
+      }
     }
 }
-
-
 
 handleDragMoved(event: any, item: any): void {
   this.setElementPosition(event, item);
@@ -105,8 +87,6 @@ handleDragMoved(event: any, item: any): void {
 
 setElementPosition(event: any, ecu: Hardware): void {
   const element = event.source.getRootElement();
-  
-  
   const boundingClientRect = element.getBoundingClientRect();
   const parentPosition = this.getElementPosition(element.parentElement);
 
@@ -123,15 +103,12 @@ private getElementPosition(element: any): { left: number, top: number } {
   return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
 }
 
-
 //---------------zoom-----------
 zoomLevel: number = 1; // Initial zoom level
 
 zoomIn() {
  // if(this.zoomLevel === 1)
  // this.zoomLevel += 1; // Increase zoom level 
- // this.getDataStreams(this.selectedArchitecture.id);
-
 }
 
 zoomOut() {
@@ -274,7 +251,6 @@ ngAfterViewInit() {
   this.setSenderRecieverStylesOnDataStreams();
 }
 
-
 private getDataStreams(architectureId: number){
   
   this.lineCreationService.getAllDataStreams(architectureId).subscribe({
@@ -289,7 +265,6 @@ private getDataStreams(architectureId: number){
         this.lineCreationService.setDataStreams(this.dataStreams);
       },
       error: (error) => {
-        // Handle the error here if needed
         console.error('Error geting Data Stream', error);
       }
     }
@@ -298,7 +273,7 @@ private getDataStreams(architectureId: number){
 }
 
 
-//------------------------------create new line(data stream)
+
 ServiceWidth = 80 + 4;//content + border 
 ServiceHeight = 80 + 4 + 12; //content + border + lable with margin
 
@@ -312,8 +287,8 @@ ServiceHeight = 80 + 4 + 12; //content + border + lable with margin
   dataStreamName: any = null;
   dataStreamDescription: any = null;
 
+//------------------------------create new line(data stream)
   onEcuClick(ecu: Service, event: MouseEvent){ 
-
     
     if(this.creatingDatastreamModus){
       if (!this.startEcu) {
@@ -328,6 +303,7 @@ ServiceHeight = 80 + 4 + 12; //content + border + lable with margin
         var ecuRect = ecuDragging.getBoundingClientRect();
         this.startLinePsition = ecuRect;
       } else if (!this.endEcu) {
+
         // Second click, select end ECU and create line
         this.endTargetEcuElementNewBus = event.target as HTMLElement;
         this.renderer.addClass(this.endTargetEcuElementNewBus, 'selected');
@@ -357,13 +333,11 @@ ServiceHeight = 80 + 4 + 12; //content + border + lable with margin
              
           });
 
-          
-
         } else {
           alert('Start and end Service cannot be the same');
         }
+
         // Reset start and end ECUs
-        
         this.startEcu = null;
         this.endEcu = null;
         this.creatingDatastreamModus = false;
@@ -382,15 +356,10 @@ ServiceHeight = 80 + 4 + 12; //content + border + lable with margin
 
   @ViewChild('scrollableEcu', { static: true }) scrollableEcu!: ElementRef;
 
-
-
-
   previousScrollY: any = 0;
   onElementScroll(): void {
-    
     const element = this.scrollableEcu.nativeElement;
     const scrollTop = element.scrollTop;
-    
 
       for (let dataStream of this.dataStreams) {
         let adjustFromY = true;
@@ -425,21 +394,14 @@ ServiceHeight = 80 + 4 + 12; //content + border + lable with margin
           }
         }
 
-      }
-
-   
+      }   
     this.previousScrollY = scrollTop
-
     this.lineCreationService.setDataStreams(this.dataStreams);
-
-  
   }
-//---------------------------------------------01.06
 
 updateCurrentState() {
 
   for(let i = 0; i < this.hardwares.length; i++){
-   // debugger
     var servicesOfEcu = this.serviceService.servicesMap.get(this.hardwares[i].id);
     if(servicesOfEcu)
     for(let j = 0; j < servicesOfEcu.length; j++){
@@ -457,8 +419,6 @@ private updateDataStream(DataStream: DataStream, id: BigInt){
   this.lineCreationService.updateDataStream(DataStream, id).subscribe();
 }
 
-//----------------------------17.06
-
 showDropdown = false; 
 servicesOfSelectedEcu: Service[] = [];
 toggleDropdownServiceForShowDataStreams(): void { 
@@ -466,7 +426,6 @@ toggleDropdownServiceForShowDataStreams(): void {
   this.servicesOfSelectedEcu = this.servicesMap.get(this.selectedEcu.id);
   this.showDropdown = !this.showDropdown;
 }
-
 
 options:any = [];
 selectedOption: any = null;
@@ -480,7 +439,6 @@ selectServiceForShowDataStreams(option: any): void {
     this.selectedOption = null;
   }
  this.showDropdown = false; 
-
 }
 
 getDataStreamsOfSelectdService(allDataStreams: any){
@@ -505,7 +463,6 @@ getDataStreamsOfSelectdService(allDataStreams: any){
     this.rewriteLine(this.selectedOption)
   }
 
-
   rewriteAllDataStreams(){ 
     let that = this;
     that.servicesMap.forEach((serviscesOfEcu: any, ecu: any)=>{
@@ -513,8 +470,6 @@ getDataStreamsOfSelectdService(allDataStreams: any){
         that.rewriteLine(serviscesOfEcu[i])
       }
     });
-
- 
   }
 
   selectAllServices(){ 

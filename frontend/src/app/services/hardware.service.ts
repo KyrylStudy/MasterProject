@@ -2,15 +2,8 @@ import { Injectable } from '@angular/core';
 import { Hardware } from '../shared/models/hardware';
 import { NewHardware } from '../shared/models/hardware';
 import { HttpClient } from '@angular/common/http';
-import { Software } from '../shared/models/software';
-import { NewSoftware } from '../shared/models/software';
-import { HardwareProperty } from '../shared/models/hardware_property';
-import { NewHardwareProperty } from '../shared/models/hardware_property';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Architecture } from '../shared/models/architectures';
-import { NewArchitecture } from '../shared/models/architectures';
-import { Service } from '../shared/models/service';
-import { newService } from '../shared/models/service';
 import { ArchitectureService } from './architecture.service';
 
 
@@ -18,14 +11,11 @@ import { ArchitectureService } from './architecture.service';
   providedIn: 'root'
 })
 export class HardwareService {
-
  
   constructor(private httpClient: HttpClient, private architectureService:ArchitectureService,) { }
 
-
-
   selectedArchitecture: Architecture | null = null;
-  //---------------ECU (Hardware)
+
   private selectedHardwareSubject = new BehaviorSubject<Hardware | null>(null);
   selectedHardware$ = this.selectedHardwareSubject.asObservable();
 
@@ -37,7 +27,6 @@ export class HardwareService {
     return this.selectedHardware$;
   }
 
-
   private hardwaresSubject = new BehaviorSubject<Hardware[]>([]);
   hardwares$ = this.hardwaresSubject.asObservable();
 
@@ -48,7 +37,6 @@ export class HardwareService {
     hardwares.pipe(
       tap(hardwares => this.hardwaresSubject.next(hardwares))
     ).subscribe(); 
-
     return hardwares;
   }
 
@@ -60,16 +48,15 @@ export class HardwareService {
         })
         if(this.selectedArchitecture)
         this.loadAllHardwares(this.selectedArchitecture.id)
-      })  // Обновить список после изменения
+      })
     ).subscribe();
   }
 
   createHardware(NewHardware: NewHardware, architectureId: number): void {
     this.httpClient.post<Hardware>(`${this.baseHardwareUrl + architectureId + '/ecu'}`, NewHardware).pipe(
-      tap(() => this.loadAllHardwares(architectureId))  // Обновить список после добавления
+      tap(() => this.loadAllHardwares(architectureId))
     ).subscribe(); 
   }
-
 
     deleteHardware(id: BigInt): void {
       this.httpClient.delete<Hardware>(`${this.baseHardwareUrl + id + '/delete'}`).pipe(
@@ -79,7 +66,7 @@ export class HardwareService {
           })
           if(this.selectedArchitecture)
           this.loadAllHardwares(this.selectedArchitecture.id)
-        })  // Обновить список после удаления
+        })
       ).subscribe();
     }
 }

@@ -17,9 +17,7 @@ export class DataStreamDialogComponent implements OnInit{
 
   twoWayConnectionEditMod: boolean = false;
   
-  save(){
-
-  }
+  save(){}
 
   nameEditMod:boolean = false;
   editName(){
@@ -88,11 +86,8 @@ export class DataStreamDialogComponent implements OnInit{
 
   addServiceProperty(): void {
     if (this.dataStreamsData.selectedDataStream && this.propertyKey && this.propertyValue) {
-
       const newDataStreamProperty: NewDataStreamProperty = {name: this.propertyKey, value: this.propertyValue};
-
       this.dataStreamPropertyService.createDataStreamProperty(newDataStreamProperty, this.dataStreamsData.selectedDataStream.id);
-
       this.propertyKey = '';
       this.propertyValue = '';
     }
@@ -127,7 +122,7 @@ export class DataStreamDialogComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.subscribeOnSelectedArchitecture()
+    this.subscribeOnSelectedArchitecture();
 
     this.dataStreamPropertyService.loadAllDataStreamProperties(this.dataStreamsData.selectedDataStream.id);
 
@@ -141,9 +136,7 @@ export class DataStreamDialogComponent implements OnInit{
   
   @Input() dataStreamsData: any | null = null;
 
-
   deleteDataStreamButton(){
-   
     this.deleteDataStream(this.dataStreamsData.selectedDataStream.id); 
   }
 
@@ -154,7 +147,6 @@ export class DataStreamDialogComponent implements OnInit{
         this.dataStreamsData.showDataStreamDialog = false;
       },
       error: (error) => {
-        // Handle the error here if needed
         console.error('Error deleting Data Stream', error);
       }
     });

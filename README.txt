@@ -39,3 +39,6 @@ change spring.datasource.url to jdbc:mysql://localhost:3306/autotech_agil?useSSL
 5. Open the MySQL Workbench and run autotech_agil database.
 5. Onen Spring Tool Suit and run "backend".
 6. Open Visual Studio and run "frontend".
+
+
+

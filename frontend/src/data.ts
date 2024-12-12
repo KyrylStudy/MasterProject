@@ -1,6 +1,6 @@
-import {Hardware} from './app/shared/models/hardware'
+//import {Hardware} from './app/shared/models/hardware'
 //import {Connection} from './app/shared/models/architectures'
-import { sample_service } from './data-for-services'
+//import { sample_service } from './data-for-services'
 
 /*export const sample_ecu: Ecu[] = [
     { position: { x: 200, y: 200 }, id: 1, label: 'ECU 1', type: 'ECU', connectedTo: 2,
@@ -29,10 +29,3 @@ import { sample_service } from './data-for-services'
     { id: 4, ecuId: 3, connectedTo: 1}
     // Add more line objects as needed
 ];*/
-
-
-
-
-
-//должен быть конструктор оьектов что бы строить реальные оьекты по даннымм которые получает
-// фронт с бекаю в конструкторе дожны быть методы по умолчанию одним из которых должен быть метор по изменению параметров позиции

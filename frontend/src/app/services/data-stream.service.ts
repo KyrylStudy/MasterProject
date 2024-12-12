@@ -3,12 +3,8 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Connection } from '../shared/models/connection-model';
 import { NewConnection } from '../shared/models/connection-model';
 import { HttpClient } from '@angular/common/http';
-import {Architecture} from '../shared/models/architectures'
 import { DataStream } from '../shared/models/data_stream';
 import { NewDataStream } from '../shared/models/data_stream';
-
-//import { sample_connections } from '../../data';
-
 
 @Injectable({
   providedIn: 'root'
@@ -24,32 +20,22 @@ export class LineCreationService {
   baseUrl = "http://localhost:8080/api/bus/"
   constructor(private httpClient: HttpClient) { }
 
-
-//-----------------------------------------------------Bus------------------
   getAllBus(architectureId: number): Observable<Connection[]>{
 
     return this.httpClient.get<Connection[]>(`${this.baseUrl + 'architecture/' + architectureId}`);
   }
 
-  /** PUT: update the hero on the server */
   updateBus(Line: Connection, id: BigInt): Observable<any> {
   return this.httpClient.put(`${this.baseUrl + id + '/' + 'update'}`, Line);
   }
 
-  //createBusUrl = 'http://localhost:8080/api/bus';
   createBus(architectureId: number, NewLine: NewConnection): Observable<any> {
-      //var url = this.baseUrl + "/" + Line.id;
-      //console.log(EcuPost);
       return this.httpClient.post<any>(`${this.baseUrl + architectureId}`, NewLine);
   }
 
-  
-  //deleteBusUrl = 'http://localhost:8080/api/bus/';
   deleteBus(id: BigInt): Observable<any> {
     return this.httpClient.delete(`${this.baseUrl + id + '/delete'}`);
     }
-
-    //------------------------------------Data---Stream----------
 
     private dataStreamsSubject = new BehaviorSubject<DataStream[]>([]);
     dataStreams$ = this.dataStreamsSubject.asObservable();
@@ -64,9 +50,7 @@ export class LineCreationService {
 
 
 
-
-
-
+    
     baseDataStreamUrl = "http://localhost:8080/api/data-stream/" 
     getAllDataStreams(architectureId: number): Observable<DataStream[]>{
 

@@ -25,7 +25,6 @@
   margin: auto;
   text-align: left;
   animation: slideIn 0.3s ease-out;
- // overflow-y: auto; 
 }
 
 .hardware-content {
@@ -65,19 +64,17 @@
 }
  
 .hardware-property {
-
   font-size: 1rem;
   color: #666;
   display: grid;
-  grid-template-columns: 20% 70% 10%; /* 80/20 split */
+  grid-template-columns: 20% 70% 10%;
   gap: 5px;
   margin-bottom: 10px;
-  
 }
 
 .property-name,
 .property-value{
-  white-space: normal; /* Allows text to wrap */
+  white-space: normal;
   word-break: break-word; 
 }
 
@@ -87,14 +84,13 @@
 
 .input-sidebar {
   display: grid;
-  grid-template-columns: 20% 70% 10%; /* 80/20 split */
+  grid-template-columns: 20% 70% 10%;
   gap: 5px;
   margin-bottom: 10px;
 }
 
 .input-field {
   padding: 10px;
-  //margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
@@ -114,8 +110,6 @@
   color: transparent;
 }
 
-
-
 .dialog-close-button {
   position: absolute;
   top: 5px;
@@ -129,8 +123,6 @@
   padding: 10px 20px;
   z-index: 10;
 }
-
-
 
 .dialog-close-button:hover {
   background-color: #e3a3a9;
@@ -185,19 +177,12 @@
   transition: border-color 0.3s ease;
 }
 
-/*.hardware-description-wrapper{
-  display: grid;
-  grid-template-columns: 90%;
-  gap: 5px;
-}*/
-
-
 .hardware-description {
   width: 90%;
   height: auto;
   font-size: 1rem;
   margin-right: 10px;
-  white-space: pre-line; /* Allows text to wrap */
+  white-space: pre-line;
   word-break: break-word; 
 }
 
@@ -231,8 +216,8 @@
 } 
 
 .green-button:hover {
-  background-color: #cef8fa; /* Darker shade for hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+  background-color: #cef8fa; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .green-button:active {

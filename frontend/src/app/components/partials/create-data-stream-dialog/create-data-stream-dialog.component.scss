@@ -90,7 +90,6 @@
     font-size: 16px;
     transition: border-color 0.3s ease;
   }
-
   
   .dialog-close-button {
     position: absolute;
@@ -131,8 +130,8 @@
   }
   
   .dialog-save-button:hover {
-    background-color: #cef8fa; /* Darker shade for hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+    background-color: #cef8fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
   .dialog-save-button:active {

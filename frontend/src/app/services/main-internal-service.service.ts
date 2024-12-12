@@ -19,18 +19,13 @@ export class MainInternalServiceService {
     return this.mainInfo$;
   }
 
-  //-------------------------------------------------------------------------------
-
-  // Initialize the BehaviorSubject with an empty array
   private hardwareSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   hardware$: Observable<any[]> = this.hardwareSubject.asObservable();
 
-  // Method to set (replace) the entire state with a new array
   setHardware(state: any[]): void {
     this.hardwareSubject.next(state);
   }
 
-  // Method to get the current state as an Observable
   getHardware(): Observable<any[]> {
     return this.hardware$;
   }

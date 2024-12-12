@@ -12,7 +12,7 @@
   }
   
   .dialog-content {
-    position: relative; /* Set to relative */
+    position: relative;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -52,11 +52,6 @@
     font-size: 16px;
     transition: border-color 0.3s ease;
   }
-  
- /* .input-name::placeholder,
-  .textarea-description::placeholder { 
-    color: #aaa;
-  }*/
   
   .input-name:focus,
   .textarea-description:focus {
@@ -120,8 +115,8 @@
   }
   
   .dialog-save-button:hover {
-    background-color: #cef8fa; /* Darker shade for hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+    background-color: #cef8fa; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   }
   
   .dialog-save-button:active {
@@ -133,20 +128,17 @@
     border: 2px solid #801D1A;
   }
   
-
-
-//custom dropdown
 .dropdown-container {
   position: relative;
   border: 2px solid transparent;
-  width: 200px; /* Adjust as needed */
+  width: 200px;
   cursor: pointer;
   background-color: white;
 }
 
 .dropdown-display {
   padding: 10px;
-  color: #252525; /* Dark text for readability */
+  color: #252525;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -160,7 +152,7 @@
   background: #fff;
   border-top: none;
   z-index: 1000;
-  max-height: 200px; /* Adjust as needed */
+  max-height: 200px;
   overflow-y: auto;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -176,16 +168,14 @@
   background-color: #f0f0f0;
 }
 
-/* Optional: Add an icon to the dropdown display */
 .dropdown-display::after {
-  content: '\25BC'; /* Downward arrow */
+  content: '\25BC';
   font-size: 0.8em;
   margin-left: 5px;
 }
 
-
 .dropdown-container:hover {
-  border-bottom-color: #801D1A; /* Color change on hover */
+  border-bottom-color: #801D1A;
 }
 
 .dropdown-container:focus {

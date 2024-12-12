@@ -10,21 +10,10 @@ export class HardwarePropertyService {
 
   constructor(private httpClient: HttpClient,) { }
 
-  //--------------Hardware(property)
-
   private hardwareProreriesSubject = new BehaviorSubject<HardwareProperty[]>([]);
   hardwareProreries$ = this.hardwareProreriesSubject.asObservable();
 
   hardwarePropertyUrl = "http://localhost:8080/api/ecu/";
-
-  /*loadAllHardwares(architectureId: number): Observable<Hardware[]>{
-    const hardwares = this.httpClient.get<Hardware[]>(`${this.baseHardwareUrl  + 'architecture/' + architectureId }`);
-    hardwares.pipe(
-      tap(hardwares => this.hardwaresSubject.next(hardwares))
-    ).subscribe(); 
-
-    return hardwares;
-  }*/
 
   loadAllHardwareProperties(hardwareId: BigInt): Observable<HardwareProperty[]>{
     const hardwareProreries = this.httpClient.get<HardwareProperty[]>(`${this.hardwarePropertyUrl + hardwareId + '/hardwares' }`);

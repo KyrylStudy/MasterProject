@@ -28,12 +28,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Search Field with Magnifier Icon -->
-        <!--<div class="search-box">
-            <input type="text" placeholder="Search" class="search-field">
-            <i class="fas fa-search magnifier-icon"></i>
-        </div>-->
     </div>
 
 
@@ -84,12 +78,12 @@
             [attr.ecuId]="item.id" >
                     <ng-container *ngIf="item.type == 'ECU'">
                         <div class="ecu">
-                            <div class="label-draggable-item">{{ item.label}}</div>  <!--{{ item.label + "|" + item.id}}-->
+                            <div class="label-draggable-item">{{ item.label}}</div> 
                             <div class="content-draggable-item">{{ servicesCountMap.get(item.id) || 0 }} Services</div> <!--number of services-->
                         </div>
                     </ng-container>
                     <ng-container *ngIf="item.type == 'Network'"> 
-                        <div class="label-bus">{{ item.label }}</div>  <!--{{ item.label + "|" + item.id}}-->
+                        <div class="label-bus">{{ item.label }}</div> 
                         <div class="bus">
                         </div>
                     </ng-container>

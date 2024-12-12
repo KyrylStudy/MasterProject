@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-//import { EcuService } from '../../../services/ecu.service';
+import { Component, Input } from '@angular/core';
 import { HardwareService } from '../../../services/hardware.service';
 import { newService } from '../../../shared/models/service';
 import { Hardware } from '../../../shared/models/hardware';
@@ -13,7 +12,7 @@ import { ServiceService } from '../../../services/service.service';
 })
 export class CreateServiceInfrastructureDialogComponent {
 
-  constructor(private serviceService:ServiceService, private hardwareService:HardwareService, /*private lineCreationService: LineCreationService*/) { }
+  constructor(private serviceService:ServiceService, private hardwareService:HardwareService) { }
 
   selectedEcu: Hardware | null = null;
   ngOnInit(): void{
@@ -41,9 +40,7 @@ export class CreateServiceInfrastructureDialogComponent {
   newServiceDescription: any = null;
   
   save(){
-
       if (this.newServiceName && this.newServiceDescription) {
-
           const newService: newService = {
             name: this.newServiceName,
             type: "Service",
@@ -54,7 +51,7 @@ export class CreateServiceInfrastructureDialogComponent {
            
             if(this.selectedEcu)
             this.serviceService.createService(newService, this.selectedEcu.id);
-           
+  
             this.createServiceDialogData.showCreateServiceDialog = false;
       }else {
             console.log("All required feelds have to be filled!")

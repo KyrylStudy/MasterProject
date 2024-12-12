@@ -51,15 +51,11 @@
                         </button>
                     </div>
                     <p class="hardware-description">{{ selectedEcu.description }}</p> 
-                   
-
                 </ng-container>
             </div>
            
             <div>
                 <h4 class="ecu-properties-header">Properties:</h4>
-
-                
                     <ul class="hardware-properties-list">
                         <li class="hardware-property" *ngFor="let detail of hardwareProperties">  
                             <ng-container *ngIf="detail.id !== hardwarePropertyId">
@@ -95,7 +91,7 @@
                 <input class="input-field" type="text" placeholder="Description" [(ngModel)]="hardwareValue"> 
                 <button class="green-button" (click)="addHardwareValue()">Add Property</button>
             </div>
-            <button class="dialog-delete-button" (click)="delete()">Delete</button> <!-- Move close button here -->
+            <button class="dialog-delete-button" (click)="delete()">Delete</button>
         </div>
         <app-service *ngIf="showService" [serviceData]="serviceDialogData" (dataStreamsTransport)="getDataStreamsFromServiceComponent($event)" ></app-service>
     </div> 

@@ -10,8 +10,6 @@ export class DataStreamPropertyService {
 
   constructor(private httpClient: HttpClient,) { }
 
-  //--------------Hardware(property)
-
   private dataStreamProreriesSubject = new BehaviorSubject<DataStreamProperty[]>([]); 
   dataStreamProreries$ = this.dataStreamProreriesSubject.asObservable();
 
@@ -25,11 +23,6 @@ export class DataStreamPropertyService {
 
     return dataStreamPropery;
   }
-
-   /* getAllDataStreams(architectureId: number): Observable<DataStream[]>{
-
-    return this.httpClient.get<DataStream[]>(`${this.baseDataStreamUrl + 'architecture/' + architectureId}`);
-  }*/
 
   createDataStreamProperty(newDataStreamProperty: NewDataStreamProperty, dataStreamId: BigInt): void {
     this.httpClient.post<NewDataStreamProperty>(`${this.dataStreamPropertyUrl + dataStreamId }`, newDataStreamProperty).pipe(

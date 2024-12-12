@@ -1,9 +1,7 @@
 <div class="dialog-container">
     <div class="dialog-content">
-        <button class="dialog-close-button" (click)="close()">Close</button> <!-- Move close button here -->
+        <button class="dialog-close-button" (click)="close()">Close</button>
         <div *ngIf="dataStreamsData.selectedDataStream">
-            
-
             <div class="horisontal-container">
                 <ng-container *ngIf="!nameEditMod">
                     <h3 class="data-stream-details-header">{{ dataStreamsData.selectedDataStream.name }}</h3>
@@ -53,21 +51,14 @@
                 </ng-container>
             </div>
 
-           <!-- <h4 class="data-stream-properties-header">Connected from: {{ dataStreamsData.selectedDataStream.connectedFrom }}</h4>
-            <h4 class="data-stream-properties-header">Connected to: {{ dataStreamsData.selectedDataStream.connectedTo }}</h4>-->
-              
             <div class="horisontal-container">
                 <h4 class="data-stream-properties-header">Two way connection: </h4>
                 <div class="checkbox-wrapper">
-                    <!--<input class="checkbox" type="checkbox" [(ngModel)]="dataStreamsData.selectedDataStream.twoWayConnection" (change)="twoWayConnectionChange($event)">-->
                     <i (click)="twoWayConnectionChange()" [ngClass]="dataStreamsData.selectedDataStream.twoWayConnection ? 'fas fa-check-square fa-2x' : 'far fa-square fa-2x'" ></i>
                 </div>
             </div>
-
             <div>
                 <h4 class="data-stream-properties-header">Properties:</h4>
-    
-                
                     <ul class="data-stream-properties-list">
                         <li class="data-stream-property" *ngFor="let detail of dataStreamProperties"> 
                             <ng-container *ngIf="detail.id !== dataStreamPropertyId">
@@ -96,7 +87,6 @@
                             </ng-container>
                         </li>
                     </ul>
-    
             </div> 
             <div class="input-sidebar">
                 <input class="input-field" type="text" placeholder="Property" [(ngModel)]="this.propertyKey">
@@ -105,7 +95,6 @@
             </div>
           
             <button class="dialog-delete-button" (click)="deleteDataStreamButton()">Delete</button>  
-            <!--<button class="dialog-save-button" [disabled]="!true" (click)="save()">Save</button> -->
         </div>
     </div>
 </div>

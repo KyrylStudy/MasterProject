@@ -12,7 +12,7 @@
   }
   
   .dialog-content {
-    position: relative; /* Set to relative */
+    position: relative;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -87,8 +87,6 @@
   .input-sidebar input[type="text"]:focus::placeholder {
     color: transparent;
   }
-  
-
 
   .dialog-delete-button {
     position: absolute;
@@ -117,19 +115,15 @@
     color: white;
     border: none;
   }
-
-  
   
   .sidebar-services-button:hover,
   .sidebar-button:hover {
     background-color: #0056b3;
   }
-
- 
   
   .input-sidebar input[type="text"] {
-      width: calc(50% - 20px); /* Adjusted width */
-      padding: 10px; /* Adjusted padding */
+      width: calc(50% - 20px); 
+      padding: 10px;
       margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
@@ -156,22 +150,17 @@
   .sidebar-services-button,
   .sidebar-button
   {
-      padding: 12px 20px; /* Adjusted padding */
+      padding: 12px 20px;
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.3s ease;
   }
-  
-
   
   .sidebar-services-button:hover,
   .sidebar-button:hover{
       background-color: #0056b3;
   }
 
-
-
-  //---------------------------------------------
   .dialog-close-button {
     position: absolute;
     top: 5px;
@@ -185,8 +174,6 @@
     padding: 10px 20px;
     z-index: 10;
   }
-  
-  
   
   .dialog-close-button:hover {
     background-color: #e3a3a9;

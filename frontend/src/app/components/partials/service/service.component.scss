@@ -1,18 +1,6 @@
 $ServiceWidth: 80px;
 $ServiceHeight: 80px;
 
-$sender-color: #0800ff;
-$receiver-color: red;
-
-// Mixin for linear gradient to show direction of data stream
-@mixin linear-gradient($direction, $start-color, $end-color) {
-  background-image: linear-gradient($direction, $start-color, $end-color);
-}
-
-.sender-receiver-gradient{
-  @include linear-gradient(to right, $sender-color, $receiver-color);
-}
-
 .main-screen {
   height: 100%;
   background-color: #F5F5F5; 
@@ -20,37 +8,30 @@ $receiver-color: red;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  //padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
-  position: relative; /* To allow absolute positioning of button-set */
+  position: relative;
 }
 
 .horisontal-wrapper {
   display: flex;
-  justify-content: space-between; /* Center align horizontally */
-  //align-items: center; /* Center align vertically */
- // gap: 5px; /* Space between .ecu elements */
+  justify-content: space-between; 
   width: 100%;
   height: 100%;
   position: absolute;
 }
 
-//.selected-ecu-wrapper{}
-
 .ecu {
-  flex: 1; /* Allow .ecu elements to grow and take available space */
-  max-width: 49%; /* Max width to ensure there's some space between them */
+  flex: 1; 
+  max-width: 49%; 
   border: 2px solid black; 
   display: flex;
   flex-direction: column;
   height: 100%;
   position: relative;
-  //margin-left: 12px;
   box-sizing: border-box;
   overflow-y: auto;
 }
-
 
 .ecu1 {
   display: flex;
@@ -72,7 +53,6 @@ $receiver-color: red;
 .drag-boundary {
   height: 100%;
   width: 100%;
-  //position: relative;
 }
 
 .cdk-drag-preview {
@@ -89,8 +69,6 @@ $receiver-color: red;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-
-
 .draggable-item {
   position: absolute;
   background-color: transparent;
@@ -101,7 +79,6 @@ $receiver-color: red;
   flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
- // transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   z-index: 2;
 }
 
@@ -137,10 +114,7 @@ $receiver-color: red;
 }
 
 .connestion-line {
-  //stroke: gradient('to right', $sender-color, $receiver-color);
   stroke:#000000;
- // stroke: url(#sender-reciever);
- //background: linear-gradient(90deg, red 0%, yellow 50%, green 100%);;
   stroke-width: 1;
 }
 
@@ -149,8 +123,8 @@ $receiver-color: red;
 }
 
 .connestion-line-overlay {
-  stroke-width: 20px; /* Increase the clickable area without affecting the visual appearance */
-  stroke: transparent; /* Make the overlay stroke transparent */
+  stroke-width: 20px; 
+  stroke: transparent; 
 }
 
 .connestion-line-overlay:hover {
@@ -159,8 +133,8 @@ $receiver-color: red;
 
 .zoom-button-set {
   position: absolute;
-  top: 45px; /* Position 10px from the top */
-  left: 0px; /* Position 10px from the left */
+  top: 45px; 
+  left: 0px; 
   display: flex;
   flex-direction: column;
   z-index: 100;
@@ -182,7 +156,6 @@ $receiver-color: red;
   background-color: green !important;
 }
 
-//------------------------------------------16.06
 .service-save-button {
   position: absolute;
   top: 5px;
@@ -199,8 +172,8 @@ $receiver-color: red;
 }
 
 .service-save-button:hover {
-  background-color: #cef8fa; /* Darker shade for hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+  background-color: #cef8fa; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .service-save-button:active {
@@ -208,25 +181,20 @@ $receiver-color: red;
   color: white;
 }
 
-//-------------------17.06
-
-/* custom-dropdown.component.css */
 .dropdown-container {
   position: absolute;
   top: 5px;
   left: 375px;
   border: 2px solid transparent;
-  width: 200px; /* Adjust as needed */
+  width: 200px;
   cursor: pointer;
   background-color: white;
   z-index: 999;
 }
 
 .dropdown-display {
-  /*border-radius: 5px;
-  border: 2px solid #009BA0;*/
   padding: 10px;
-  color: #252525; /* Dark text for readability */
+  color: #252525; 
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -241,7 +209,7 @@ $receiver-color: red;
   background: #fff;
   border-top: none;
   z-index: 1000;
-  max-height: 200px; /* Adjust as needed */
+  max-height: 200px; 
   overflow-y: auto;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 999;
@@ -260,17 +228,15 @@ $receiver-color: red;
   z-index: 999;
 }
 
-/* Optional: Add an icon to the dropdown display */
 .dropdown-display::after {
-  content: '\25BC'; /* Downward arrow */
+  content: '\25BC'; 
   font-size: 0.8em;
   margin-left: 5px;
   z-index: 999;
 }
 
-
 .dropdown-container:hover, .move-button:hover, .search-field:hover, .filter-field:hover  {
-  border-bottom-color: #801D1A; /* Color change on hover */
+  border-bottom-color: #801D1A; 
 }
 
 .dropdown-container:focus, .move-button:hover, .search-field:focus, .filter-field:focus {
@@ -294,15 +260,15 @@ $receiver-color: red;
 }
 
 .select-all-services-button:hover {
-  background-color: #cef8fa; /* Darker shade for hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+  background-color: #cef8fa; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .select-all-services-button:active {
   background-color: #009BA0;
   color: white;
 } 
-//---------------------------------
+
 .back-button {
   position: absolute;
   top: 5px;
@@ -318,8 +284,8 @@ $receiver-color: red;
 }
 
 .back-button:hover {
-  background-color: #e3a3a9; /* Darker shade for hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+  background-color: #e3a3a9; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .back-button:active {
@@ -343,8 +309,8 @@ $receiver-color: red;
 }
 
 .create-service-button:hover {
-  background-color: #cef8fa; /* Darker shade for hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+  background-color: #cef8fa; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .create-service-button:active {
@@ -368,8 +334,8 @@ $receiver-color: red;
 }
 
 .create-datastream-button:hover {
-  background-color: #cef8fa; /* Darker shade for hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for a "lift" effect */
+  background-color: #cef8fa; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .create-datastream-button:active {

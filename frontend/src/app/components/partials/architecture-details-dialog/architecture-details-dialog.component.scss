@@ -12,7 +12,7 @@
 }
 
 .dialog-content {
-  position: relative; /* Set to relative */
+  position: relative;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -23,9 +23,6 @@
   text-align: left;
   animation: slideIn 0.3s ease-out;
 }
-
-
-
 
 .dialog-delete-button {
   position: absolute;
@@ -76,7 +73,6 @@
 .horisontal-container {
   display: flex;
   flex-direction: row;
-  //align-items: center; 
 }
 
 .vertical-container{
@@ -157,13 +153,12 @@
   transition: border-color 0.3s ease;
 }
 
-
 .description {
   width: 90%;
   height: auto;
   font-size: 1rem;
   margin-right: 10px;
-  white-space: pre-line; /* Allows text to wrap */
+  white-space: pre-line;
   word-break: break-word; 
 }
 

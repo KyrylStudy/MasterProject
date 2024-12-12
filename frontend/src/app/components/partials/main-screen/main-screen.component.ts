@@ -376,7 +376,7 @@ private graph: { [key: string]: string[] } = {};
   }
 
 
-//----------------------------------------------------------------------------HEADER---START-----
+//----------------------------------------------------------------------------HEADER--------
 
 
    updateBus(Line: Connection, id: BigInt){
@@ -570,10 +570,10 @@ onEcuClick(ecu: Hardware, event: MouseEvent){
           });
          
         }else{
-          console.log("ECU has to be connected with the Network")
+          alert("ECU has to be connected with the Network")
         }
       } else {
-        console.log('Start and end ECUs cannot be the same');
+        alert('Start and end ECUs cannot be the same');
       }
       // Reset start and end ECUs
       
@@ -613,7 +613,7 @@ selectOptioWhatToCreate(option: any): void {
 
 creatingNewLine = false;
 
-//---------------------------------------------------HEADER---END------------------
+//---------------------------------------------------JSON-Token------------------
 
 async generateToken() {
   // Map each hardware item to a Promise that loads its properties
