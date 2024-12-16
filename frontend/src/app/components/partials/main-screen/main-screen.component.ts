@@ -646,19 +646,21 @@ async generateToken() {
 
           // Load service properties asynchronously
           const serviceProperties = await firstValueFrom(this.serviceProperyService.loadAllServiceProperties(service.id));
+
+          // Add dataStreams of the current service to the hardware
           dataStreamsForHardware = dataStreamsForHardware.concat(dataStreamsForToken);
+          
           return {
             ...serviceWithoutPosition,
-            properties: serviceProperties || [], // Ensure properties are correctly attached
-            //dataStreams: dataStreamsForToken, // Assign filtered dataStreams to the service
+            properties: serviceProperties || [], 
           };
         })
       );
 
       return {
         ...hardwareWithoutPosition,
-        properties: properties || [], // Use the loaded properties or an empty array if none are found
-        services, // Attach services with their corresponding dataStreams
+        properties: properties || [], 
+        services, 
         dataStreams: dataStreamsForHardware
       };
     })
