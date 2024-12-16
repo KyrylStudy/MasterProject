@@ -621,6 +621,7 @@ async generateToken() {
     this.ecus.map(async (hardwareItem) => {
       const { positionX, positionY, connectedTo, ...hardwareWithoutPosition } = hardwareItem; // Exclude unwanted properties
 
+      let dataStreamsForHardware: any[] = [];
       const properties = await firstValueFrom(this.hardwarePropertyService.loadAllHardwareProperties(hardwareItem.id));
       const services = await Promise.all(
         (this.servicesMap.get(hardwareItem.id) || []).map(async (service) => {
@@ -645,11 +646,11 @@ async generateToken() {
 
           // Load service properties asynchronously
           const serviceProperties = await firstValueFrom(this.serviceProperyService.loadAllServiceProperties(service.id));
-
+          dataStreamsForHardware = dataStreamsForHardware.concat(dataStreamsForToken);
           return {
             ...serviceWithoutPosition,
             properties: serviceProperties || [], // Ensure properties are correctly attached
-            dataStreams: dataStreamsForToken, // Assign filtered dataStreams to the service
+            //dataStreams: dataStreamsForToken, // Assign filtered dataStreams to the service
           };
         })
       );
@@ -658,6 +659,7 @@ async generateToken() {
         ...hardwareWithoutPosition,
         properties: properties || [], // Use the loaded properties or an empty array if none are found
         services, // Attach services with their corresponding dataStreams
+        dataStreams: dataStreamsForHardware
       };
     })
   );
